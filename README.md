@@ -2,8 +2,9 @@
 Our app helps users organize and keep track of their video game collections. It offers the user a neatly organized list of queryable titles within their collection. It also leverages wish-lists to help users keep track of games they want to play. The appliation treats titles as sigle items, allowing users to see a nice summary of the game, what platforms the game is compatible with, and what developer/publishers are in their collection. Lastly it also allows users to rate games within their collection to help show which titles are their favorite and least favorite. 
 
 ## Software Requirements
-* Postgres (https://hub.docker.com/_/postgres)
 * Docker (https://www.docker.com)
+* Postgres (https://hub.docker.com/_/postgres)
+* Django (https://hub.docker.com/_/django)
 
 ## Installation
 ```bash
@@ -18,7 +19,6 @@ To run the Video Game Collection Tracker app in a powershell/terminal please run
 ```bash
 docker-compose up
 ```
-See in-app menus for help with using specific features.
 
 # License
 The MIT License
