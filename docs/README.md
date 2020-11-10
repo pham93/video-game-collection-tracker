@@ -40,9 +40,9 @@ This document lists some of the first user stories that we have come up with.
     * AC.07: Admin User should be able to update whole record of a game. 
 
 ## Mis-User Stories
-* As an malicious user, I want to edit a different users Library.
+* As a malicious user, I want to edit a different users Library.
     * MC.01: Proper Access Control Lists are employed. 
-* As an malicious user, I want to edit a different users Wish List.
+* As a malicious user, I want to edit a different users Wish List.
     * MC.01: Proper Access Control Lists are employed. 
-* As an malicious user, I want to edit a video games Title, Summary, Platform, Developer, Publisher.
+* As a malicious user, I want to edit a video games Title, Summary, Platform, Developer, Publisher.
     * MC.01: Proper Access Control Lists are employed. 
