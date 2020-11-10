@@ -27,7 +27,7 @@ http://localhost:8080
 
 ## Mockup Diagrams
 This is an initial mockup for what the Home screen could look like:
-![Home Mockup](https://github.com/japerezg86/video-game-collection-tracker/images/Mockup_Home.PNG)
+![Home Mockup](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/Mockup_Home.PNG)
 
 # License
 The MIT License
