@@ -1,4 +1,4 @@
-# video-game-collection-tracker
+# Project Summary
 Our app helps users organize and keep track of their video game collections. It offers the user a neatly organized list of queryable titles within their collection. It also leverages wish-lists to help users keep track of games they want to play. The appliation treats titles as sigle items, allowing users to see a nice summary of the game, what platforms the game is compatible with, and what developer/publishers are in their collection. Lastly it also allows users to rate games within their collection to help show which titles are their favorite and least favorite. 
 
 ## Software Requirements
