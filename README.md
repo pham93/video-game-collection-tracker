@@ -23,6 +23,12 @@ Then once the container starts you should be able to nagivate to the link below 
 
 http://localhost:8080
 
+# Diagrams
+
+## Mockup Diagrams
+This is an initial mockup for what the Home screen could look like:
+![Home Mockup](https://github.com/japerezg86/video-game-collection-tracker/images/Mockup_Home.PNG)
+
 # License
 The MIT License
 
