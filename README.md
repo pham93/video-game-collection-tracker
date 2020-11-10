@@ -29,6 +29,18 @@ http://localhost:8080
 This is an initial mockup for what the Home screen could look like:
 ![Home Mockup](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/Mockup_Home.PNG)
 
+This is an initial mockup for what the Add New Game screen could look like:
+![Add Game Mockup](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/Mockup_Add.PNG)
+
+This is an initial mockup for what the Game Details screen could look like:
+![Details Mockup](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/Mockup_Details.PNG)
+
+This is an initial mockup for what the Library screen could look like:
+![Library Mockup](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/Mockup_Library.PNG)
+
+This is an initial mockup for what the Wish screen could look like:
+![Wish Mockup](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/Mockup_Wish.PNG)
+
 # License
 The MIT License
 
