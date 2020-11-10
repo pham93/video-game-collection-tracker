@@ -41,6 +41,16 @@ This is an initial mockup for what the Library screen could look like:
 This is an initial mockup for what the Wish screen could look like:
 ![Wish Mockup](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/Mockup_Wish.PNG)
 
+## Architecture Diagrams
+This is the Level 1 System Context Diagram:
+![System Context](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/VGCT_Level1_SystemContext-1.jpg)
+
+This is the Level 2 Containers Diagram:
+![Containers](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/VGCT_Level2_Containers-1.jpg)
+
+This is the Level 3 Components Diagram:
+![Components](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/VGCT_Level3_Components-1.jpg)
+
 # License
 The MIT License
 
