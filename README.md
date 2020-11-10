@@ -23,6 +23,34 @@ Then once the container starts you should be able to nagivate to the link below 
 
 http://localhost:8080
 
+# Diagrams
+
+## Mockup Diagrams
+This is an initial mockup for what the Home screen could look like:
+![Home Mockup](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/Mockup_Home.PNG)
+
+This is an initial mockup for what the Add New Game screen could look like:
+![Add Game Mockup](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/Mockup_Add.PNG)
+
+This is an initial mockup for what the Game Details screen could look like:
+![Details Mockup](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/Mockup_Details.PNG)
+
+This is an initial mockup for what the Library screen could look like:
+![Library Mockup](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/Mockup_Library.PNG)
+
+This is an initial mockup for what the Wish screen could look like:
+![Wish Mockup](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/Mockup_Wish.PNG)
+
+## Architecture Diagrams
+This is the Level 1 System Context Diagram:
+![System Context](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/VGCT_Level1_SystemContext-1.jpg)
+
+This is the Level 2 Containers Diagram:
+![Containers](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/VGCT_Level2_Containers-1.jpg)
+
+This is the Level 3 Components Diagram:
+![Components](https://github.com/japerezg86/video-game-collection-tracker/blob/main/images/VGCT_Level3_Components-1.jpg)
+
 # License
 The MIT License
 
