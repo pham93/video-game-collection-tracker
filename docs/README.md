@@ -30,7 +30,7 @@ This document lists some of the first user stories that we have come up with.
     * AC.03: User should be able to select unplayable, in progress, main story completed, and 100% completed for completion status.
     * AC.04: User should be able to toggle the I want to play this game soon button.
 
-* As Administrator, I want to edit the single game dashboard, so that I can input game Title, Summary, Platform, Developer and Publisher.
+* As an Administrator, I want to edit the single game dashboard, so that I can input game Title, Summary, Platform, Developer and Publisher.
     * AC.01: Admin User should be able to input/edit Title of a game.
     * AC.02: Admin User should be able to input/edit Summary of a game.
     * AC.03: Admin User should be able to input/edit Platform of a game.
