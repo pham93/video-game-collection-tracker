@@ -41,3 +41,4 @@ class VideoGame(models.Model):
     platformList = (('Owned', 'Owned'), ('Wish', 'Wish'))
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)], blank=False)
     statusList = (('Unplayed', 'Unplayed'), ('In Progress', 'In Progress'), ('Main Story Completed', 'Main Story Completed'), ('100% Completed', '100% Completed'))
+    status = models.CharField(max_length=100, choices=statusList, blank=False)
