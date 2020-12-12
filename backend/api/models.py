@@ -30,6 +30,10 @@ class ApiKey(models.Model):
 class ApiKeyAdmin(admin.ModelAdmin):
     list_display = ('owner','key')
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> b422bea2d482ca6693571df68692065d062f5f8d
 class VideoGame(models.Model):
     title = models.CharField(max_length=100, blank=False)
     summary = models.CharField(max_length=300, blank=False)
@@ -40,4 +44,8 @@ class VideoGame(models.Model):
     platformList = (('Owned', 'Owned'), ('Wish', 'Wish'))
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)], blank=False)
     statusList = (('Unplayed', 'Unplayed'), ('In Progress', 'In Progress'), ('Main Story Completed', 'Main Story Completed'), ('100% Completed', '100% Completed'))
+<<<<<<< HEAD
 
+=======
+    status = models.CharField(max_length=100, choices=statusList, blank=False)
+>>>>>>> b422bea2d482ca6693571df68692065d062f5f8d
