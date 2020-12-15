@@ -42,6 +42,7 @@ class VideoGame(models.Model):
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)], blank=False)
     statusList = (('Unplayed', 'Unplayed'), ('In Progress', 'In Progress'), ('Main Story Completed', 'Main Story Completed'), ('100% Completed', '100% Completed'))
     status = models.CharField(max_length=100, default='some_string', choices=statusList, blank=False)
+    upload = models.ImageField(upload_to='BoxArt')
 
 class VideoGameAdmin(admin.ModelAdmin):
-    list_display = ('title','summary','platform','developer','publisher','rating',)
+    list_display = ('title','summary','platform','developer','publisher','rating','status','upload')
