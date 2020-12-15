@@ -2,7 +2,6 @@
 <div>
   <div id="nav">
     <NavBar/>
-    <router-link to="/">Home</router-link>
   </div>
   <router-view />
 </div>
@@ -22,13 +21,15 @@ export default defineComponent({
 <style>
 html {
   font-size: 16px;
+  background-color: #121212;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #ffffff;
+  background: #1e1e1e;
 }
 
 #nav {
@@ -37,10 +38,10 @@ html {
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: textSecondaryColor;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: textSecondaryColor;
 }
 </style>

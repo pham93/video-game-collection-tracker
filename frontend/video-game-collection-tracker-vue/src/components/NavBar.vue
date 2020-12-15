@@ -8,9 +8,9 @@ import { defineComponent, ref } from "vue";
     export default defineComponent({
         setup() {
             const items = ref([
-                {label: 'Calendar', icon: 'pi pi-fw pi-calendar', to: '/library'},
                 {label: 'Home', icon: 'pi pi-fw pi-home', to: '/'},
-                {label: 'Calendar', icon: 'pi pi-fw pi-calendar', to: '/wishlist'},
+                {label: 'Library', icon: 'pi pi-fw pi-folder', to: '/library'},
+                {label: 'Wish List', icon: 'pi pi-fw pi-shopping-cart', to: '/wishlist'},
             ]);
 
             return { items };

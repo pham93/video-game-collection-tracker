@@ -1,0 +1,20 @@
+{
+	"data": [
+		{
+			"name": "Genshin Impact",
+			"image": "genshin.jpg"
+		},
+		{
+			"name": "Horizon Zero Dawn",
+			"image": "horizon.jpg"
+		},
+		{
+			"name": "Nier Automata",
+			"image": "nier.jpg"
+		},
+		{
+			"name": "Among Us",
+			"image": "noimageavailable.jpg"
+        }
+    ]
+}
