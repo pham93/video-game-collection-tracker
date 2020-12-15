@@ -37,6 +37,11 @@ class VideoGame(models.Model):
     platform = models.CharField(max_length=100, choices=platformList, blank=False)
     developer = models.CharField(max_length=300, blank=False)
     publisher = models.CharField(max_length=300, blank=False)
-    platformList = (('Owned', 'Owned'), ('Wish', 'Wish'))
+    ownedList = (('Owned', 'Owned'), ('Wish', 'Wish'))
+    owned = models.CharField(max_length=300, default='some_string', choices=ownedList, blank=False)
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)], blank=False)
     statusList = (('Unplayed', 'Unplayed'), ('In Progress', 'In Progress'), ('Main Story Completed', 'Main Story Completed'), ('100% Completed', '100% Completed'))
+    status = models.CharField(max_length=100, default='some_string', choices=statusList, blank=False)
+
+class VideoGameAdmin(admin.ModelAdmin):
+    list_display = ('title','summary','platform','developer','publisher','rating',)
