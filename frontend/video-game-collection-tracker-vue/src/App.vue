@@ -44,4 +44,8 @@ html {
 #nav a.router-link-exact-active {
   color: textSecondaryColor;
 }
+
+.button-set Button {
+  margin-inline: 10px;
+}
 </style>
