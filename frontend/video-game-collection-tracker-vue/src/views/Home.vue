@@ -7,8 +7,12 @@
         <div class="game-title">{{slotProps.data.name}}</div>
 	    </template>
     </Carousel>
-    <Button label="Add Video Game" class="p-button-raised p-button-rounded" />
+	<Dialog header="Header" v-model:visible="displayDialog" >
+		<AddGameForm/>
+	</Dialog>
+    <Button label="Add Video Game" class="p-button-raised p-button-rounded" @click="openDialog" />
   </div>
+ 
 </template>
 
 <script lang="ts">
@@ -22,30 +26,36 @@ export default defineComponent({
     return {
       videoGameService: new VideoGameService(),
       games: null,
-			responsiveOptions: [
-				{
-					breakpoint: '1024px',
-					numVisible: 3,
-					numScroll: 3
-				},
-				{
-					breakpoint: '600px',
-					numVisible: 2,
-					numScroll: 2
-				},
-				{
-					breakpoint: '480px',
-					numVisible: 1,
-					numScroll: 1
-				}
-			]
-		}
-	},
-	created() {
+      responsiveOptions: [
+        {
+          breakpoint: '1024px',
+          numVisible: 3,
+          numScroll: 3
+        },
+        {
+          breakpoint: '600px',
+          numVisible: 2,
+          numScroll: 2
+        },
+        {
+          breakpoint: '480px',
+          numVisible: 1,
+          numScroll: 1
+        }
+      ],
+      displayDialog: false,
+    }
+  },
+  methods: {
+    openDialog() {
+      this.displayDialog = true;
+    },
+  },
+  created() {
     this.videoGameService = new VideoGameService();
-	},
-	mounted() {
+  },
+  mounted() {
     this.videoGameService.getVideoGames().then(data => this.games = data.slice(0,9));
-	},
+  },
 });
 </script>

@@ -48,4 +48,12 @@ html {
 .button-set Button {
   margin-inline: 10px;
 }
+
+.p-field {
+  margin-block: 15px;
+}
+
+.drop {
+  margin-block: 15px;
+}
 </style>
