@@ -15,14 +15,13 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import VideoGameService from "../service/VideoGameService";
+import videoGameService from "../service/VideoGameService";
 
 export default defineComponent({
     name: "GameDataTable",
     setup() {
         const games = ref(null);
         const selections = ref([]);
-        const videoGameService = new VideoGameService();
         videoGameService.getVideoGames().then(data => games.value = data.slice(0,9));
         const populateData = () => {
             // add logic

@@ -50,11 +50,7 @@ html {
   margin-inline: 10px;
 }
 
-.p-field {
-  margin-block: 15px;
-}
-
-.drop {
+.input-box {
   margin-block: 15px;
 }
 </style>

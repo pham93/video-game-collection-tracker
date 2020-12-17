@@ -135,7 +135,7 @@ class VideoGames(APIView):
         print str(request.data)
 
         if request.data.get('upload') is None:
-            upload = 'NoImageAvailable_.jpg'
+            upload = 'static/images/NoImageAvailable_.jpg'
         else:
             upload = request.data.get('upload')
 

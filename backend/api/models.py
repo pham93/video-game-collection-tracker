@@ -58,7 +58,7 @@ class VideoGame(models.Model):
         ('100% Completed','100% Completed')
     ]
     progress= models.CharField(max_length=300, choices=progressChoices, null=True)
-    upload = models.ImageField(upload_to='./static/images/', null=True)
+    upload = models.ImageField(max_length=500, upload_to='./static/images/', null=True)
 
 class VideoGameAdmin(admin.ModelAdmin):
     list_display = ('title','summary','platform','developer','publisher','owned','rating','progress','upload')
