@@ -130,31 +130,55 @@ class VideoGames(APIView):
 
         return HttpResponse(json_data, content_type='json')
 
-    # def post(self, request, *args, **kwargs):
-    #     print 'REQUEST DATA'
-    #     print str(request.data)
+    def post(self, request, *args, **kwargs):
+        print 'REQUEST DATA'
+        print str(request.data)
 
-    #     eventtype = request.data.get('eventtype')
-    #     timestamp = int(request.data.get('timestamp'))
-    #     userid = request.data.get('userid')
-    #     requestor = request.META['REMOTE_ADDR']
+        if request.data.get('upload') is None:
+            upload = 'NoImageAvailable_.jpg'
+        else:
+            upload = request.data.get('upload')
 
-    #     newEvent = Event(
-    #         eventtype=eventtype,
-    #         timestamp=datetime.datetime.fromtimestamp(timestamp/1000, pytz.utc),
-    #         userid=userid,
-    #         requestor=requestor
-    #     )
+        newVideoGame = VideoGame(
+            title = request.data.get('title'),
+            summary = request.data.get('summary'),
+            platform = request.data.get('platform'),
+            developer = request.data.get('developer'),
+            publisher = request.data.get('publisher'),
+            owned = request.data.get('owned'),
+            rating = request.data.get('rating'),
+            progress = request.data.get('progress'),
+            upload = upload
+        )
 
-    #     try:
-    #         newEvent.clean_fields()
-    #     except ValidationError as e:
-    #         print e
-    #         return Response({'success':False, 'error':e}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            newVideoGame.clean_fields()
+        except ValidationError as e:
+            print e
+            return Response({'success':False, 'error':e}, status=status.HTTP_400_BAD_REQUEST)
 
-    #     newEvent.save()
-    #     print 'New Event Logged from: ' + requestor
-    #     return Response({'success': True}, status=status.HTTP_200_OK)
+        newVideoGame.save()
+        print 'New Video Game Saved.'
+        return Response({'success': True}, status=status.HTTP_200_OK)
+
+    def delete(self, request, *args, **kwargs):
+        print 'REQUEST DATA'
+        print str(request.data)
+
+        try:
+            for id in request.data:
+                try:
+                    instance = VideoGame.objects.get(uuid=id)
+                    if instance is not None:
+                        instance.delete()
+                        print(id + ' Video Game Deleted.')
+                except VideoGame.DoesNotExist as f:
+                    print f
+        except ValidationError as e:
+            print e
+            return Response({'success':False, 'error':e}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'success': True}, status=status.HTTP_200_OK)
 
 class Events(APIView):
     permission_classes = (AllowAny,)

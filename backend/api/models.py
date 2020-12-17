@@ -7,6 +7,7 @@ from django.contrib.auth.models import User, Group
 
 from django.contrib import admin
 import base64
+import uuid
 
 class Event(models.Model):
     eventtype = models.CharField(max_length=1000, blank=False)
@@ -31,6 +32,7 @@ class ApiKeyAdmin(admin.ModelAdmin):
     list_display = ('owner','key')
 
 class VideoGame(models.Model):
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100, blank=False)
     summary = models.CharField(max_length=300, blank=False)
     platformChoices = [
@@ -56,7 +58,7 @@ class VideoGame(models.Model):
         ('100% Completed','100% Completed')
     ]
     progress= models.CharField(max_length=300, choices=progressChoices, null=True)
-    upload = models.ImageField(upload_to='./static/images/')
+    upload = models.ImageField(upload_to='./static/images/', null=True)
 
 class VideoGameAdmin(admin.ModelAdmin):
     list_display = ('title','summary','platform','developer','publisher','owned','rating','progress','upload')
