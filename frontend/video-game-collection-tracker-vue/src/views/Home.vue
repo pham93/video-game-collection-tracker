@@ -1,10 +1,10 @@
 <template>
   <div class="home">
-    <h1>Recent Additions:</h1>
-    <Carousel :value="games" :numVisible="3" :numScroll="1" :circular="true" :autoplayInterval="3000">
+    <h1>Preview:</h1>
+    <Carousel v-if="imageData.length > 0" :value="imageData" :numVisible="3" :numScroll="1" :circular="true" :autoplayInterval="3000">
 	    <template #item="slotProps">
-        <img :src="'mockData/images/' + slotProps.data.image" :alt="slotProps.data.image" />
-        <div class="game-title">{{slotProps.data.name}}</div>
+        <img :src="slotProps.data.imageSrc" :alt="slotProps.data.imageSrc" />
+        <div class="game-title">{{slotProps.data.title}}</div>
 	    </template>
     </Carousel>
 	<Dialog header="Header" v-model:visible="displayDialog" >
@@ -16,46 +16,51 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 import VideoGameService from '../service/VideoGameService';
 
 
 export default defineComponent({
   name: "Home",
-  data() {
+  setup() {
+    const games = ref<any[]>([]);
+    const displayDialog = ref(false);
+    const responsiveOptions = ref([
+      {
+        breakpoint: '1024px',
+        numVisible: 3,
+        numScroll: 3
+      },
+      {
+        breakpoint: '600px',
+        numVisible: 2,
+        numScroll: 2
+      },
+      {
+        breakpoint: '480px',
+        numVisible: 1,
+        numScroll: 1
+      }
+    ]);
+    const videoGameService = new VideoGameService();
+    onMounted(() => {
+      videoGameService.getVideoGames().then(data => games.value = data.slice(0,9));
+    });
+    const imageData = computed(() =>
+      games.value.map(e => ({
+        title: e.title,
+        imageSrc: e.upload,
+      }))
+    );
+    const openDialog = () => {
+      displayDialog.value = true;
+    };
     return {
-      videoGameService: new VideoGameService(),
-      games: null,
-      responsiveOptions: [
-        {
-          breakpoint: '1024px',
-          numVisible: 3,
-          numScroll: 3
-        },
-        {
-          breakpoint: '600px',
-          numVisible: 2,
-          numScroll: 2
-        },
-        {
-          breakpoint: '480px',
-          numVisible: 1,
-          numScroll: 1
-        }
-      ],
-      displayDialog: false,
-    }
-  },
-  methods: {
-    openDialog() {
-      this.displayDialog = true;
-    },
-  },
-  created() {
-    this.videoGameService = new VideoGameService();
-  },
-  mounted() {
-    this.videoGameService.getVideoGames().then(data => this.games = data.slice(0,9));
+        imageData,
+        responsiveOptions,
+        displayDialog,
+        openDialog,
+    };
   },
 });
 </script>

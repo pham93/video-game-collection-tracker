@@ -2,7 +2,6 @@
   <div class="button-set">
     <Button label="Delete Video Game" class="p-button-raised p-button-rounded" />
     <Button label="Add Video Game" class="p-button-raised p-button-rounded" @click="openDialog" />
-    <Button label="Export List" class="p-button-raised p-button-rounded" />
     <Dialog header="Header" v-model:visible="displayDialog" >
 		  <AddGameForm/>
 	  </Dialog>

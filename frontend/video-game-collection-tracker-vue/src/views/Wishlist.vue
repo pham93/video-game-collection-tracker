@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Wishlist</h1>
-      <h2>DataTable goes here</h2>
+      <h2>Pardon our dust. This page is under construction.</h2>
       <DataTableButtonSet/>
   </div>
 </template>
