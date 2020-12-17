@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h1>Preview:</h1>
-    <Carousel v-if="imageData.length > 0" :value="imageData" :numVisible="3" :numScroll="1" :circular="true" :autoplayInterval="3000">
+    <Carousel v-if="imageData?.length > 0" :value="imageData" :numVisible="3" :numScroll="1" :circular="true" :autoplayInterval="3000">
 	    <template #item="slotProps">
         <img :src="slotProps.data.imageSrc" :alt="slotProps.data.imageSrc" height="256" width="256" />
         <div class="game-title">{{slotProps.data.title}}</div>
@@ -18,12 +18,12 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "vue";
 import videoGameService from '../service/VideoGameService';
+import { useGetGames } from "../state/gamesState";
 
 
 export default defineComponent({
   name: "Home",
   setup() {
-    const games = ref<any[]>([]);
     const displayPanel = ref(false);
     const responsiveOptions = ref([
       {
@@ -42,11 +42,9 @@ export default defineComponent({
         numScroll: 1
       }
     ]);
-    onMounted(() => {
-      videoGameService.getVideoGames().then(data => games.value = data.slice(0,9));
-    });
+    const { games } = useGetGames();
     const imageData = computed(() =>
-      games.value.map(e => ({
+      games?.value?.map(e => ({
         title: e.title,
         imageSrc: e.upload,
       }))
@@ -59,6 +57,7 @@ export default defineComponent({
         responsiveOptions,
         displayPanel,
         openPanel,
+        games,
     };
   },
 });

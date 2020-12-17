@@ -41,6 +41,7 @@
 <script lang="ts">
 import { defineComponent, ref, reactive, toRefs, onMounted } from "vue";
 import videoGameService from '../service/VideoGameService';
+import { useGetGames } from "../state/gamesState";
 
     export default defineComponent({
       name: "AddGameForm",
@@ -73,9 +74,19 @@ import videoGameService from '../service/VideoGameService';
               { name: 'Main Story Completed' },
               { name: '100% Completed' }
           ]);
-          const sendGame = () => {
+          const { games } = useGetGames();
+          const sendGame = async () => {
               console.log(formValues);
-              videoGameService.saveVideoGame(formValues);
+              try {
+                  const newGame = await videoGameService.saveVideoGame(formValues);
+                  console.log(games)
+                  console.log(games.value)
+                  if (games.value) {
+                      games.value.push(newGame[0]);
+                  }
+              } catch (e) {
+                  console.log(e);
+              }
           };
           return {
               ...toRefs(formValues),

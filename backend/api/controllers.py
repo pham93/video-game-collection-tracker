@@ -126,7 +126,9 @@ class VideoGames(APIView):
 
     def get(self, request, format=None):
         videogames = VideoGame.objects.all()
+        print videogames
         json_data = serializers.serialize('json', videogames)
+        print json_data
 
         return HttpResponse(json_data, content_type='json')
 
@@ -159,7 +161,12 @@ class VideoGames(APIView):
 
         newVideoGame.save()
         print 'New Video Game Saved.'
-        return Response({'success': True}, status=status.HTTP_200_OK)
+        newVideoGameObject = VideoGame.objects.filter(pk=newVideoGame.pk).all()
+        print newVideoGameObject
+
+        json_data = serializers.serialize('json', newVideoGameObject)
+        print json_data
+        return Response(json_data, content_type='json', status=status.HTTP_200_OK)
 
     def delete(self, request, *args, **kwargs):
         print 'REQUEST DATA'

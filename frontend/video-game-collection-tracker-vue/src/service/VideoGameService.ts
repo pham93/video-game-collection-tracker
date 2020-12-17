@@ -1,9 +1,13 @@
 import axios from 'axios';
+type GameObject = {
+    pk: string,
+    fields: Record<string,unknown>
+}
 
 class VideoGameService {
     async getVideoGames() {
         const rawJson = await axios.get('/api/videogames');
-        return rawJson.data.map((e: { fields: any; }) => e.fields);
+        return rawJson.data.map((e: GameObject) => ({ uuid:e.pk, ...e.fields }));
     }
     
     async saveVideoGame(videoGame: any) {
@@ -18,7 +22,16 @@ class VideoGameService {
             "progress": videoGame.selectedProgress.name,
             "upload": videoGame.imgUrlText
         }
-        await axios.post('/api/videogames', payload);
+        const rawString = await axios.post('/api/videogames', payload);
+        const rawJson = JSON.parse(rawString.data)
+        console.log(rawJson);
+        return rawJson.map((e: GameObject) => ({ uuid:e.pk, ...e.fields }));
+    }
+
+    async deleteVideoGames(gameIds: string[]) {
+        await axios.delete('/api/videogames', {
+            data: gameIds
+        });
     }
 }
 
