@@ -46,6 +46,7 @@ html {
 }
 
 .button-set Button {
+  margin-block: 10px;
   margin-inline: 10px;
 }
 
