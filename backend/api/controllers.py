@@ -119,6 +119,43 @@ class Session(APIView):
         logout(request)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class VideoGames(APIView):
+    permission_classes = (AllowAny,)
+    parser_classes = (parsers.JSONParser,parsers.FormParser)
+    renderer_classes = (renderers.JSONRenderer, )
+
+    def get(self, request, format=None):
+        videogames = VideoGame.objects.all()
+        json_data = serializers.serialize('json', videogames)
+
+        return HttpResponse(json_data, content_type='json')
+
+    # def post(self, request, *args, **kwargs):
+    #     print 'REQUEST DATA'
+    #     print str(request.data)
+
+    #     eventtype = request.data.get('eventtype')
+    #     timestamp = int(request.data.get('timestamp'))
+    #     userid = request.data.get('userid')
+    #     requestor = request.META['REMOTE_ADDR']
+
+    #     newEvent = Event(
+    #         eventtype=eventtype,
+    #         timestamp=datetime.datetime.fromtimestamp(timestamp/1000, pytz.utc),
+    #         userid=userid,
+    #         requestor=requestor
+    #     )
+
+    #     try:
+    #         newEvent.clean_fields()
+    #     except ValidationError as e:
+    #         print e
+    #         return Response({'success':False, 'error':e}, status=status.HTTP_400_BAD_REQUEST)
+
+    #     newEvent.save()
+    #     print 'New Event Logged from: ' + requestor
+    #     return Response({'success': True}, status=status.HTTP_200_OK)
+
 class Events(APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.JSONParser,parsers.FormParser)

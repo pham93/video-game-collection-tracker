@@ -33,16 +33,30 @@ class ApiKeyAdmin(admin.ModelAdmin):
 class VideoGame(models.Model):
     title = models.CharField(max_length=100, blank=False)
     summary = models.CharField(max_length=300, blank=False)
-    platformList = (('PS4', 'PS4'), ('XB1', 'XB1'), ('SWTCH', 'SWTCH'), ('PC', 'PC'))
-    platform = models.CharField(max_length=100, choices=platformList, blank=False)
+    platformChoices = [
+        ('PS4','PS4'),
+        ('XB1','XB1'),
+        ('SWTCH','SWTCH'),
+        ('PC','PC')
+    ]
+    platform = models.CharField(max_length=300, choices=platformChoices, null=True)
     developer = models.CharField(max_length=300, blank=False)
     publisher = models.CharField(max_length=300, blank=False)
-    ownedList = (('Owned', 'Owned'), ('Wish', 'Wish'))
-    owned = models.CharField(max_length=300, default='some_string', choices=ownedList, blank=False)
+    ownedChoices = [
+        ('Owned','Owned'),
+        ('Wish','Wish'),
+        ('Unowned','Unowned')
+    ]
+    owned = models.CharField(max_length=300, choices=ownedChoices, null=True)
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)], blank=False)
-    statusList = (('Unplayed', 'Unplayed'), ('In Progress', 'In Progress'), ('Main Story Completed', 'Main Story Completed'), ('100% Completed', '100% Completed'))
-    status = models.CharField(max_length=100, default='some_string', choices=statusList, blank=False)
-    upload = models.ImageField(upload_to='BoxArt')
+    progressChoices = [
+        ('Unplayed','Unplayed'),
+        ('In Progress','In Progress'),
+        ('Main Story Completed','Main Story Completed'),
+        ('100% Completed','100% Completed')
+    ]
+    progress= models.CharField(max_length=300, choices=progressChoices, null=True)
+    upload = models.ImageField(upload_to='./static/images/')
 
 class VideoGameAdmin(admin.ModelAdmin):
-    list_display = ('title','summary','platform','developer','publisher','rating','status','upload')
+    list_display = ('title','summary','platform','developer','publisher','owned','rating','progress','upload')
