@@ -10,7 +10,7 @@ FROM python:2.7.13
 ENV PYTHONUNBUFFERED 1
 
 # Setup linkages to code repositories and add to image
-
+ADD backend /var/www/backend
 WORKDIR /var/www/backend
 
 #Python packages

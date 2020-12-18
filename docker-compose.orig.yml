@@ -11,16 +11,22 @@
 version: "2"
 services:
   nginx:
-    image: jorgeperez2/video-game-collection-tracker-nginx
+    image: nginx:latest
     restart: always
     ports:
       - "80:8000"
+    volumes:
+      - ./backend:/var/www/backend
+      - ./prod/nginx:/etc/nginx/conf.d
+      - ./prod/logs:/var/logs/nginx
     depends_on:
       - django
   django:
-    image: jorgeperez2/video-game-collection-tracker-app
+    build: .
     restart: always
     command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py migrate && gunicorn django_backend.wsgi -w 8 -t 300 -b 0.0.0.0:8000"
+    volumes:
+      - ./backend:/var/www/backend
     expose:
      - "8000"
     depends_on:
@@ -32,6 +38,7 @@ services:
       - postgres-config:/etc/postgresql
       - postgres-data:/var/lib/postgresql/data
       - postgres-logs:/var/log/postgresql
+      - ./database-backup:/database-backup
 volumes:
   postgres-config:
   postgres-data:

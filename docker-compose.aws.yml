@@ -1,0 +1,55 @@
+# @Author: Matthew Hale <matthale>
+# @Date:   2017-09-05T12:29:08-05:00
+# @Email:  mlhale@unomaha.edu
+# @Filename: docker-compose.yml
+# @Last modified by:   matthale
+# @Last modified time: 2018-09-06T15:21:50-05:00
+# @Copyright: Copyright (C) 2018 Matthew L. Hale
+
+
+
+version: "2"
+services:
+  nginx:
+    image: jorgeperez2/video-game-collection-tracker-nginx:latest
+    cpu_shares: 100
+    mem_limit: "104857600"
+    restart: always
+    ports:
+      - "80:8000"
+    depends_on:
+      - django
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: video-game-collection-tracker
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: nginx
+  django:
+    image: jorgeperez2/video-game-collection-tracker-app:latest
+    restart: always
+    command: bash -c "gunicorn django_backend.wsgi -w 8 -t 300 -b 0.0.0.0:8000"
+    # command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py migrate && gunicorn django_backend.wsgi -w 8 -t 300 -b 0.0.0.0:8000"
+    cpu_shares: 100
+    mem_limit: "524288000"
+    expose:
+     - "8000"
+    depends_on:
+     - db
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: video-game-collection-tracker
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: django
+  db:
+    restart: always
+    image: postgres:10.3
+    cpu_shares: 100
+    mem_limit: "104857600"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: video-game-collection-tracker
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: db
