@@ -1,0 +1,95 @@
+version: "3"
+
+volumes:
+  postgres-config:
+  postgres-data:
+  postgres-logs:
+  keycloak-datastore:
+
+networks:
+  gamer-camp:
+  keycloak-net:
+
+services:
+  ###################################################################
+  ## GATEWAY
+  ###################################################################
+  openresty:
+    build: ./docker-files/openresty/
+    restart: always
+    image: openresty-oidc:latest
+    ports:
+      - "80:80"
+    volumes:
+      - "./conf/nginx/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf"
+    networks:
+      - gamer-camp
+  ##################################################################
+  ## KEYCLOAK AUTH
+  ##################################################################
+  keycloak-db:
+    image: postgres:13.1-alpine
+    restart: on-failure
+    volumes:
+      - keycloak-datastore:/var/lib/postgresql/data
+    ports:
+      - "25432:5432"
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    networks:
+      - keycloak-net
+
+  keycloak:
+    image: jboss/keycloak:12.0.1
+    restart: on-failure
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=password
+      - DB_VENDOR=postgres
+      - DB_USER=admin
+      - DB_PASSWORD=password
+      - DB_ADDR=keycloak-db
+      - DB_PORT=5432
+      - DB_DATABASE=keycloak
+      - PROXY_ADDRESS_FORWARDING=true
+    ports:
+      - "8080:8080"
+    depends_on:
+      - keycloak-db
+    networks:
+      - keycloak-net
+      - gamer-camp
+
+  ##################################################################
+  ## APP STACK
+  ##################################################################
+  app-rest-node:
+    restart: on-failure
+    image: node:14.15.3-alpine3.10
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./rest-server:/home/node/app
+    ports:
+      - "3000:3000"
+    command: "npm start"
+    networks:
+      - gamer-camp
+
+  app-db:
+    restart: on-failure
+    image: postgres:13.1-alpine
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgresdb
+    volumes:
+      - postgres-config:/etc/postgresql
+      - postgres-data:/var/lib/postgresql/data
+      - postgres-logs:/var/log/postgresql
+    networks:
+      - gamer-camp
