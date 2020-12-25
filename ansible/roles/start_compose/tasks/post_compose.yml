@@ -1,0 +1,33 @@
+---
+# wait for keycloak to start
+- name: wait for server
+  shell: "{{keycloak_exec}} curl -v {{keycloak_admin_rest_url}}"
+  register: curl_res
+  retries: 10
+  until: "curl_res.rc == 0"
+
+- debug:
+    msg: "{{curl_res}}"
+
+- name: Connecting to keycloak admin API
+  shell: "{{kcadm_exec}} config credentials --server {{keycloak_admin_rest_url}} --realm {{keycloak_realm}} --user {{keycloak_user}} --password {{keycloak_password}}"
+  register: kcadm
+  failed_when: "kcadm.rc != 0 and kcadm.rc != 1"
+
+- name: "Wait for keycloak to start and GET {{keycloak_main_client}} id if exits"
+  shell: "{{kcadm_exec}} get clients -r {{keycloak_realm}} --fields id,clientId"
+  register: client_ids
+  retries: 1
+  until: "client_ids.rc == 0"
+
+- name: "Find and delete {{keycloak_main_client}} in {{keycloak_realm}}"
+  shell: "{{kcadm_exec}} delete clients/{{item.id}} -r {{keycloak_realm}}"
+  when: "item.clientId == keycloak_main_client"
+  loop:
+    "{{client_ids.stdout | from_json | flatten(levels=1)}}"
+
+- name: "Create {{keycloak_main_client}}"
+  shell: "{{kcadm_exec}} create clients -r {{keycloak_realm}} -s clientId={{keycloak_main_client}} -s enabled=true -s secret={{client_secret}} -s 'redirectUris=[ \"http://localhost/*\" ]'"
+  register: res
+  retries: 2
+  until: "res.rc == 0"

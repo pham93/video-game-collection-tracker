@@ -1,0 +1,25 @@
+---
+# install all require binaries for development
+- name: "Install for development"
+  hosts: localhost
+  tasks:
+    - name: Install binaries
+      become: yes
+      become_user: root
+      apt:
+        state: present
+        pkg:
+        - nodejs
+        - npm
+
+    - name: Install yarn
+      become: yes
+      become_user: root
+      npm:
+        name: yarn
+        global: yes
+        state: present
+
+
+
+    

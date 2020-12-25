@@ -1,0 +1,40 @@
+---
+# install yarn if doesn't exist
+
+# build all micro service
+- name: create dev folder
+  file:
+    path: "{{staging_dir}}"
+    state: directory
+
+- name: Copy compose file over
+  template:
+    src: docker-compose.yml
+    dest: "{{staging_dir}}/docker-compose.yml"
+  
+- name: install services npm dependencies
+  shell:
+    cmd: "yarn install --frozen-lockfile"
+    chdir: "{{rest_services}}"
+  register: yarn_install
+  failed_when: "yarn_install.rc != 0 and yarn_install.rc != 1"
+
+- name: create nginx conf folder
+  file:
+    path: "{{nginx_conf_dir}}"
+    state: directory
+
+- name: Copy nginx.conf
+  template:
+    src: nginx.conf
+    dest: "{{nginx_conf_dir}}/nginx.conf"
+
+- name: create openresty folder
+  file:
+    path: "{{openresty_dir}}"
+    state: directory
+
+- name: openresty Dockerfile
+  template:
+    src: "openresty.dockerfile"
+    dest: "{{openresty_dir}}/Dockerfile"

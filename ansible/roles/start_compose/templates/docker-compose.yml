@@ -15,13 +15,13 @@ services:
   ## GATEWAY
   ###################################################################
   openresty:
-    build: ./docker-files/openresty/
+    build: {{openresty_dir}}
     restart: always
     image: openresty-oidc:latest
     ports:
       - "80:80"
     volumes:
-      - "./conf/nginx/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf"
+      - "{{nginx_conf_dir}}/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf"
     networks:
       - gamer-camp
   ##################################################################
@@ -45,11 +45,11 @@ services:
     image: jboss/keycloak:12.0.1
     restart: on-failure
     environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=password
+      - KEYCLOAK_USER={{keycloak_user}}
+      - KEYCLOAK_PASSWORD={{keycloak_password}}
       - DB_VENDOR=postgres
-      - DB_USER=admin
-      - DB_PASSWORD=password
+      - DB_USER={{db_user}}
+      - DB_PASSWORD={{db_password}}
       - DB_ADDR=keycloak-db
       - DB_PORT=5432
       - DB_DATABASE=keycloak
@@ -73,7 +73,7 @@ services:
     environment:
       - NODE_ENV=production
     volumes:
-      - ./rest-server:/home/node/app
+      - "{{services_dir}}:/home/node/app"
     ports:
       - "3000:3000"
     command: "npm start"
@@ -84,8 +84,8 @@ services:
     restart: on-failure
     image: postgres:13.1-alpine
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: {{db_user}}
+      POSTGRES_PASSWORD: {{db_password}}
       POSTGRES_DB: postgresdb
     volumes:
       - postgres-config:/etc/postgresql

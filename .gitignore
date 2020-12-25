@@ -1,3 +1,4 @@
 prod/logs
 **/node_modules
 **/dist
+**/*.retry

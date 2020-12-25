@@ -1,0 +1,5 @@
+keycloak_password: "{{vault_keycloak_password}}"
+keycloak_user: "{{vault_keycloak_user}}"
+
+db_user: "{{vault_db_user}}"
+db_password: "{{vault_db_password}}"

@@ -1,0 +1,20 @@
+
+rest_services: ../server/rest-server/
+staging_dir: "{{ansible_env.HOME}}/staging_dir"
+nginx_conf_dir: "{{staging_dir}}/nginx/conf"
+
+# The path to the directory of the playbook that was passed to the ansible-playbook command line.
+services_dir: "{{playbook_dir}}/../server/rest-server"
+
+openresty_dir: "{{staging_dir}}/openresty"
+
+keycloak_service_name: keycloak
+keycloak_port: 8080
+keycloak_realm: master
+client_secret: "{{vault_client_secret}}"
+keycloak_main_client: "gamex"
+keycloak_admin_rest_url: "http://{{keycloak_service_name}}:{{keycloak_port}}/auth"
+keycloak_home_dir: "/opt/jboss/keycloak"
+kcadm_bin: "{{keycloak_home_dir}}/bin/kcadm.sh"
+keycloak_exec: docker-compose -f {{staging_dir}}/docker-compose.yml exec -T keycloak
+kcadm_exec: " {{keycloak_exec}} sh {{kcadm_bin}}"
