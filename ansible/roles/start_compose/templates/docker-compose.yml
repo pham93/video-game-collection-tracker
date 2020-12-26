@@ -73,8 +73,9 @@ services:
     environment:
       - NODE_ENV=production
     volumes:
-      - "{{services_dir}}:/home/node/app"
-      - "{{rest_server_entrypoint_file}}:/entrypoint.sh"
+      - "{{working_rest_server_dir}}:/home/node/app"
+      - "{{rest_server_dir}}/entrypoint.sh:/entrypoint.sh"
+      - "{{rest_server_dir}}/config.yml:/config.yml"
     ports:
       - "3000:3000"
     command: sh /entrypoint.sh

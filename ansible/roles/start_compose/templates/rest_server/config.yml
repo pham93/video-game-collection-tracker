@@ -1,0 +1,7 @@
+database:
+  type: postgres
+  host: rest-db
+  port: 5432
+  username: admin
+  password: password
+  database: postgresdb

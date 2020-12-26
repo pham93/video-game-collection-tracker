@@ -24,10 +24,13 @@
     path: "{{rest_server_dir}}"
     state: directory
 
-- name: Copy rest entrypoint.sh
+- name: Copy rest server files
   template:
-    src: "rest_server/entrypoint.sh"
-    dest: "{{rest_server_entrypoint_file}}"
+    src: "rest_server/{{item}}"
+    dest: "{{rest_server_dir}}/{{item}}"
+  loop:
+    - entrypoint.sh
+    - config.yml
 
 - name: create nginx conf folder
   file:
