@@ -1,3 +1,5 @@
+app_name: gamex
+
 keycloak_password: "{{vault_keycloak_password}}"
 keycloak_user: "{{vault_keycloak_user}}"
 

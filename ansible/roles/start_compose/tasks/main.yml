@@ -3,7 +3,7 @@
   include_tasks: pre_compose.yml
 
 - name: starting compose
-  shell: "docker-compose -f {{staging_dir}}/docker-compose.yml up -d"
+  shell: "docker-compose -p {{app_name}} -f {{staging_dir}}/docker-compose.yml up -d"
 
 - name: post compose
   include_tasks: post_compose.yml

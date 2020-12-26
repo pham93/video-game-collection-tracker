@@ -9,17 +9,18 @@ import { GameModule } from './game/game.module';
 const dbConfig: DatabaseConfig = Configuration().database;
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
+  imports: [
+  GameModule,
+  TypeOrmModule.forRoot({
     ...dbConfig,
-    entities: [],
     autoLoadEntities: true,
-    synchronize: process.env.NODE_ENV === 'development',
+    // update this. For now this is for development
+    synchronize: true
   }),
   ConfigModule.forRoot({
     isGlobal: true,
     load: [Configuration]
   }),
-  GameModule,
   ],
   controllers: [AppController],
   providers: [AppService],

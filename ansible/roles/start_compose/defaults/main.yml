@@ -16,7 +16,7 @@ keycloak_main_client: "gamex"
 keycloak_admin_rest_url: "http://{{keycloak_service_name}}:{{keycloak_port}}/auth"
 keycloak_home_dir: "/opt/jboss/keycloak"
 kcadm_bin: "{{keycloak_home_dir}}/bin/kcadm.sh"
-keycloak_exec: docker-compose -f {{staging_dir}}/docker-compose.yml exec -T keycloak
+keycloak_exec: docker-compose -p {{app_name}} -f {{staging_dir}}/docker-compose.yml exec -T keycloak
 kcadm_exec: " {{keycloak_exec}} sh {{kcadm_bin}}"
 
 rest_server_dir: "{{staging_dir}}/rest_server"
