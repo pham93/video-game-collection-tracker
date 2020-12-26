@@ -18,3 +18,6 @@ keycloak_home_dir: "/opt/jboss/keycloak"
 kcadm_bin: "{{keycloak_home_dir}}/bin/kcadm.sh"
 keycloak_exec: docker-compose -f {{staging_dir}}/docker-compose.yml exec -T keycloak
 kcadm_exec: " {{keycloak_exec}} sh {{kcadm_bin}}"
+
+rest_server_dir: "{{staging_dir}}/rest_server"
+rest_server_entrypoint_file: "{{rest_server_dir}}/entrypoint.sh"

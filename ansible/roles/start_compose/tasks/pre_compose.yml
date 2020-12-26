@@ -19,6 +19,16 @@
   register: yarn_install
   failed_when: "yarn_install.rc != 0 and yarn_install.rc != 1"
 
+- name: create rest server folder
+  file:
+    path: "{{rest_server_dir}}"
+    state: directory
+
+- name: Copy rest entrypoint.sh
+  template:
+    src: "rest_server/entrypoint.sh"
+    dest: "{{rest_server_entrypoint_file}}"
+
 - name: create nginx conf folder
   file:
     path: "{{nginx_conf_dir}}"
@@ -28,6 +38,7 @@
   template:
     src: nginx.conf
     dest: "{{nginx_conf_dir}}/nginx.conf"
+    mode: 0766
 
 - name: create openresty folder
   file:

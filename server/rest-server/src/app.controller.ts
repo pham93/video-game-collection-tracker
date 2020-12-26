@@ -9,4 +9,9 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get("test")
+  getTest(): string {
+    return "This is a test watch for fn how is everybody"
+  }
 }

@@ -65,7 +65,7 @@ services:
   ##################################################################
   ## APP STACK
   ##################################################################
-  app-rest-node:
+  rest-server:
     restart: on-failure
     image: node:14.15.3-alpine3.10
     user: "node"
@@ -74,13 +74,14 @@ services:
       - NODE_ENV=production
     volumes:
       - "{{services_dir}}:/home/node/app"
+      - "{{rest_server_entrypoint_file}}:/entrypoint.sh"
     ports:
       - "3000:3000"
-    command: "npm start"
+    command: sh /entrypoint.sh
     networks:
       - gamer-camp
 
-  app-db:
+  rest-db:
     restart: on-failure
     image: postgres:13.1-alpine
     environment:
