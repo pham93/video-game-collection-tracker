@@ -10,7 +10,7 @@
       "path": "./apps/microservices/userservice/tsconfig.app.json"
     },
     {
-      "path": "./apps/rest-server/tsconfig.app.json"
+      "path": "./apps/server_gateway/tsconfig.app.json"
     }
   ]
 }

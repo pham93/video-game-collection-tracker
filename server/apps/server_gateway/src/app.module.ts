@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import Configuration, { DatabaseConfig } from './config/configuration';
+import Configuration, { DatabaseConfig } from 'shared/config/configuration';
 import { GameModule } from './game/game.module';
 
 const dbConfig: DatabaseConfig = Configuration().database;

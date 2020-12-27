@@ -1,23 +1,23 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/rest-server/src",
+  "sourceRoot": "apps/server_gateway/src",
   "compilerOptions": {
     "plugins": [
       "@nestjs/swagger/plugin"
     ],
     "webpack": true,
-    "tsConfigPath": "apps/rest-server/tsconfig.app.json"
+    "tsConfigPath": "apps/server_gateway/tsconfig.app.json"
   },
   "monorepo": true,
-  "root": "apps/rest-server",
+  "root": "apps/server_gateway",
   "projects": {
-    "rest-server": {
+    "server_gateway": {
       "type": "application",
-      "root": "apps/rest-server",
+      "root": "apps/server_gateway",
       "entryFile": "main",
-      "sourceRoot": "apps/rest-server/src",
+      "sourceRoot": "apps/server_gateway/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/rest-server/tsconfig.app.json"
+        "tsConfigPath": "apps/server_gateway/tsconfig.app.json"
       }
     },
     "microservices/userservice": {

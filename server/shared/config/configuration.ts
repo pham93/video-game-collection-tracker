@@ -1,7 +1,6 @@
 import { readFileSync } from 'fs';
 import * as yaml from 'js-yaml';
 import { join } from 'path';
-import { ConnectionOptions } from 'typeorm';
 
 export interface DatabaseConfig {
   type: any;
@@ -14,8 +13,8 @@ export interface DatabaseConfig {
 
 const YAML_CONFIG_FILENAME = 'config.yml';
 
-export default () => {
+export default (configFile?: string) => {
   return yaml.load(
-    readFileSync(join('/', YAML_CONFIG_FILENAME), 'utf8'),
+    readFileSync(join('/', configFile ?? YAML_CONFIG_FILENAME), 'utf8'),
   );
 };
