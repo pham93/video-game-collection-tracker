@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { CreateGameDto } from './dto/createGame.dto';
 
 export enum PlatformE {
   PS4 = 'PS4',
@@ -23,33 +24,32 @@ export enum ProgressE {
 @Entity()
 export class GameEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id?: string;
 
   @Column({length: 100})
-  title: string;
+  title!: string;
 
   @Column({length: 100})
-  summary: string;
+  summary!: string;
 
   @Column({length: 300})
-  developer: string;
+  developer!: string;
 
   @Column({length: 300})
-  publisher: string;
+  publisher!: string;
 
   @Column({type: 'smallint'})
-  rating: number;
+  rating!: number;
 
   @Column({type: 'enum', enum: PlatformE, nullable: true})
-  platform: PlatformE;
+  platform!: PlatformE;
 
   @Column({type:'enum', enum: OwnedE , nullable: true})
-  owned: OwnedE;
+  owned!: OwnedE;
 
   @Column({type: 'enum', enum: ProgressE, nullable: true})
-  progress: ProgressE;
+  progress!: ProgressE;
 
   @Column({length: 300, nullable: true})
-  upload: string;
-
+  upload!: string;
 }

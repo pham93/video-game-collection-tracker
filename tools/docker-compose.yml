@@ -1,4 +1,9 @@
 version: '3'
+networks:
+  gamex_gamer-camp:
+    external: true
+  gamex_keycloak-net:
+    external: true
 
 services:
   pgadmin:
@@ -11,6 +16,9 @@ services:
     ports:
       - "5050:80"
     restart: unless-stopped
+    networks:
+      - gamex_gamer-camp
+      - gamex_keycloak-net
 
 volumes:
   pgadmin-datastore:
