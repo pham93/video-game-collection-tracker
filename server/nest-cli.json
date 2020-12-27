@@ -1,0 +1,33 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/rest-server/src",
+  "compilerOptions": {
+    "plugins": [
+      "@nestjs/swagger/plugin"
+    ],
+    "webpack": true,
+    "tsConfigPath": "apps/rest-server/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/rest-server",
+  "projects": {
+    "rest-server": {
+      "type": "application",
+      "root": "apps/rest-server",
+      "entryFile": "main",
+      "sourceRoot": "apps/rest-server/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/rest-server/tsconfig.app.json"
+      }
+    },
+    "microservices/userservice": {
+      "type": "application",
+      "root": "apps/microservices/userservice",
+      "entryFile": "main",
+      "sourceRoot": "apps/microservices/userservice/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/microservices/userservice/tsconfig.app.json"
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@ staging_dir: "{{ansible_env.HOME}}/staging_dir"
 nginx_conf_dir: "{{staging_dir}}/nginx/conf"
 
 # The path to the directory of the playbook that was passed to the ansible-playbook command line.
-working_rest_server_dir: "{{playbook_dir}}/../server/rest-server"
+working_rest_server_dir: "{{playbook_dir}}/../server"
 
 openresty_dir: "{{staging_dir}}/openresty"
 

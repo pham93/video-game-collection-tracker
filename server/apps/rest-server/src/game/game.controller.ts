@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Put, UsePipes, ValidationPipe, Param } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateGameDto } from './dto/createGame.dto';
+import { UpdateGameDto, UpdateGameParam } from './dto/updateGame.dto';
 import { GameEntity } from './game.entity';
 import { GameService } from './game.service';
 
@@ -18,5 +19,10 @@ export class GameController {
   @Post()
   saveVideoGame(@Body() createGameDto: CreateGameDto): Promise<GameEntity> {
     return this.gameService.saveGame(createGameDto)
+  }
+
+  @Put(':id')
+  updateVideoGame(@Param() params: UpdateGameParam, @Body() updateGameDto: UpdateGameDto): string {
+    return this.gameService.updateGame({...updateGameDto, id: params.id});
   }
 }

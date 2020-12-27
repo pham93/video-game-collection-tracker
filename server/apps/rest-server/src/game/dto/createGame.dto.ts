@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, IsNumberString, IsOptional, IsString, IsUrl, IsUUID } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString, IsUrl, IsUUID } from 'class-validator';
 import { OwnedE, PlatformE, ProgressE } from '../game.entity';
 /**
  * Data Transfer object for creating a game
@@ -34,7 +34,7 @@ export class CreateGameDto {
   progress!: ProgressE;
 
   @IsNotEmpty()
-  @IsNumberString()
+  @IsNumber()
   rating!: number;
 
   @IsOptional()

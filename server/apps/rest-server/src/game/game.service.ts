@@ -27,6 +27,10 @@ export class GameService {
     return this.gameRepository.save(newGame);
   }
 
+  updateGame(createGameDto: Partial<CreateGameDto>): string {
+    return 'is working';
+  }
+
   deleteGames() {
     console.log('to be implement');
   }
