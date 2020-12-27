@@ -1,8 +1,0 @@
-# Pull base image.
-FROM nginx:latest
-
-# Setup linkages to code repositories and add to image
-ADD backend /var/www/backend
-ADD prod/nginx /etc/nginx/conf.d
-ADD prod/logs /var/logs/nginx
-WORKDIR /var/www/backend
