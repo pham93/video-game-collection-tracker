@@ -1,4 +1,5 @@
 app_name: gamex
+app_mode: development
 
 keycloak_password: "{{vault_keycloak_password}}"
 keycloak_user: "{{vault_keycloak_user}}"

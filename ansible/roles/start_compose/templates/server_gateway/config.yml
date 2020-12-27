@@ -5,3 +5,8 @@ database:
   username: {{db_user}}
   password: {{db_password}}
   database: {{rest_db_name}}
+
+microservices:
+  userservice:
+    port: {{ms_userservice_port}}
+    host: {{ms_userservice_host}}

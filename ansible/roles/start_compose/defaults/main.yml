@@ -1,12 +1,9 @@
-
-rest_services: ../server/rest-server/
-staging_dir: "{{ansible_env.HOME}}/staging_dir"
-nginx_conf_dir: "{{staging_dir}}/nginx/conf"
-
 # The path to the directory of the playbook that was passed to the ansible-playbook command line.
 working_rest_server_dir: "{{playbook_dir}}/../server"
+staging_dir: "{{ansible_env.HOME}}/staging_dir"
 
 openresty_dir: "{{staging_dir}}/openresty"
+nginx_conf_dir: "{{openresty_dir}}/nginx/conf"
 
 keycloak_service_name: keycloak
 keycloak_port: 8080
@@ -19,9 +16,17 @@ kcadm_bin: "{{keycloak_home_dir}}/bin/kcadm.sh"
 keycloak_exec: docker-compose -p {{app_name}} -f {{staging_dir}}/docker-compose.yml exec -T keycloak
 kcadm_exec: " {{keycloak_exec}} sh {{kcadm_bin}}"
 
-rest_server_dir: "{{staging_dir}}/rest_server"
-rest_server_entrypoint_file: "{{rest_server_dir}}/entrypoint.sh"
+server_gateway_dir: "{{staging_dir}}/server_gateway"
 
+microservices_dir: "{{staging_dir}}/microservices"
+ms_userservice_dir: "{{microservices_dir}}/userservice"
+ms_userservice_host: ms_userservice
+ms_userservice_port: 4000
+
+server_dir_collection:
+  - "{{nginx_conf_dir}}"
+  - "{{ms_userservice_dir}}"
+  - "{{server_gateway_dir}}"
 
 rest_db_port: 5432
 rest_db_host: rest-db

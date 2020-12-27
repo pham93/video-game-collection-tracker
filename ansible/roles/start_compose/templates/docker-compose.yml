@@ -7,8 +7,8 @@ volumes:
   keycloak-datastore:
 
 networks:
-  gamer-camp:
-  keycloak-net:
+  gamex_net:
+  keycloak_net:
 
 services:
   ###################################################################
@@ -23,7 +23,7 @@ services:
     volumes:
       - "{{nginx_conf_dir}}/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf"
     networks:
-      - gamer-camp
+      - gamex_net
   ##################################################################
   ## KEYCLOAK AUTH
   ##################################################################
@@ -39,7 +39,7 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
     networks:
-      - keycloak-net
+      - keycloak_net
 
   keycloak:
     image: jboss/keycloak:12.0.1
@@ -59,28 +59,45 @@ services:
     depends_on:
       - keycloak-db
     networks:
-      - keycloak-net
-      - gamer-camp
+      - keycloak_net
+      - gamex_net
 
   ##################################################################
   ## APP STACK
   ##################################################################
-  rest-server:
+  server_gateway:
     restart: on-failure
     image: node:14.15.3-alpine3.10
     user: "node"
     working_dir: /home/node/app
     environment:
-      - NODE_ENV=production
+      - NODE_ENV={{app_mode}}
     volumes:
       - "{{working_rest_server_dir}}:/home/node/app"
-      - "{{rest_server_dir}}/entrypoint.sh:/entrypoint.sh"
-      - "{{rest_server_dir}}/config.yml:/config.yml"
+      - "{{server_gateway_dir}}/entrypoint.sh:/entrypoint.sh"
+      - "{{server_gateway_dir}}/config.yml:/config.yml"
     ports:
       - "3000:3000"
     command: sh /entrypoint.sh
     networks:
-      - gamer-camp
+      - gamex_net
+
+  {{ms_userservice_host}}:
+    restart: on-failure
+    image: node:14.15.3-alpine3.10
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV={{app_mode}}
+      - PORT={{ms_userservice_port}}
+    volumes:
+      - "{{working_rest_server_dir}}:/home/node/app"
+      - "{{ms_userservice_dir}}/entrypoint.sh:/entrypoint.sh"
+    ports:
+      - "{{ms_userservice_port}}:{{ms_userservice_port}}"
+    command: sh /entrypoint.sh
+    networks:
+      - gamex_net
 
   rest-db:
     restart: on-failure
@@ -94,4 +111,4 @@ services:
       - postgres-data:/var/lib/postgresql/data
       - postgres-logs:/var/log/postgresql
     networks:
-      - gamer-camp
+      - gamex_net

@@ -3,7 +3,7 @@
 - name: wait for server
   shell: "{{keycloak_exec}} curl -v {{keycloak_admin_rest_url}}"
   register: curl_res
-  retries: 10
+  retries: 20
   until: "curl_res.rc == 0"
 
 - debug:

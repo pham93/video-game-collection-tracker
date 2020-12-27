@@ -1,54 +1,35 @@
 ---
-# install yarn if doesn't exist
-
-# build all micro service
-- name: create dev folder
+- name: create server folders
   file:
-    path: "{{staging_dir}}"
+    path: "{{item}}"
     state: directory
+  loop:
+    "{{server_dir_collection}}"
 
 - name: Copy compose file over
   template:
     src: docker-compose.yml
     dest: "{{staging_dir}}/docker-compose.yml"
-  
-- name: install services npm dependencies
-  shell:
-    cmd: "yarn install --frozen-lockfile"
-    chdir: "{{rest_services}}"
-  register: yarn_install
-  failed_when: "yarn_install.rc != 0 and yarn_install.rc != 1"
 
-- name: create rest server folder
-  file:
-    path: "{{rest_server_dir}}"
-    state: directory
-
-- name: Copy rest server files
+- name: Copy server files
   template:
-    src: "rest_server/{{item}}"
-    dest: "{{rest_server_dir}}/{{item}}"
+    src: "{{item}}"
+    dest: "{{staging_dir}}/{{item}}"
   loop:
-    - entrypoint.sh
-    - config.yml
+    - "openresty/Dockerfile"
+    - "server_gateway/entrypoint.sh"
+    - "server_gateway/config.yml"
+    - "microservices/userservice/entrypoint.sh"
 
-- name: create nginx conf folder
-  file:
-    path: "{{nginx_conf_dir}}"
-    state: directory
-
-- name: Copy nginx.conf
+- name: "Copy nginx.conf to {{nginx_conf_dir}}"
   template:
-    src: nginx.conf
+    src: openresty/nginx.conf
     dest: "{{nginx_conf_dir}}/nginx.conf"
     mode: 0766
 
-- name: create openresty folder
-  file:
-    path: "{{openresty_dir}}"
-    state: directory
-
-- name: openresty Dockerfile
-  template:
-    src: "openresty.dockerfile"
-    dest: "{{openresty_dir}}/Dockerfile"
+- name: install services npm dependencies
+  shell:
+    cmd: "yarn install --frozen-lockfile"
+    chdir: "{{working_rest_server_dir}}"
+  register: yarn_install
+  failed_when: "yarn_install.rc != 0 and yarn_install.rc != 1"
