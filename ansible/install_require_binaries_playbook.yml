@@ -19,7 +19,3 @@
         name: yarn
         global: yes
         state: present
-
-
-
-    

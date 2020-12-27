@@ -31,3 +31,5 @@ server_dir_collection:
 rest_db_port: 5432
 rest_db_host: rest-db
 rest_db_name: postgresdb
+
+www_static_dir: /var/www/backend/static/

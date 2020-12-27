@@ -16,14 +16,33 @@ services:
   ###################################################################
   openresty:
     build: {{openresty_dir}}
-    restart: always
+    restart: on-failure
     image: openresty-oidc:latest
     ports:
       - "80:80"
     volumes:
       - "{{nginx_conf_dir}}/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf"
+      - "{{working_rest_server_dir}}/testing:{{www_static_dir}}"
     networks:
       - gamex_net
+
+  server_gateway:
+    restart: on-failure
+    image: node:14.15.3-alpine3.10
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV={{app_mode}}
+    volumes:
+      - "{{working_rest_server_dir}}:/home/node/app"
+      - "{{server_gateway_dir}}/entrypoint.sh:/entrypoint.sh"
+      - "{{server_gateway_dir}}/config.yml:/config.yml"
+    ports:
+      - "3000:3000"
+    command: sh /entrypoint.sh
+    networks:
+      - gamex_net
+
   ##################################################################
   ## KEYCLOAK AUTH
   ##################################################################
@@ -63,25 +82,8 @@ services:
       - gamex_net
 
   ##################################################################
-  ## APP STACK
+  ## MICROSERVICE STACK
   ##################################################################
-  server_gateway:
-    restart: on-failure
-    image: node:14.15.3-alpine3.10
-    user: "node"
-    working_dir: /home/node/app
-    environment:
-      - NODE_ENV={{app_mode}}
-    volumes:
-      - "{{working_rest_server_dir}}:/home/node/app"
-      - "{{server_gateway_dir}}/entrypoint.sh:/entrypoint.sh"
-      - "{{server_gateway_dir}}/config.yml:/config.yml"
-    ports:
-      - "3000:3000"
-    command: sh /entrypoint.sh
-    networks:
-      - gamex_net
-
   {{ms_userservice_host}}:
     restart: on-failure
     image: node:14.15.3-alpine3.10
