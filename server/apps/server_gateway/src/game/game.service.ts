@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateGameDto } from './dto/createGame.dto';
+import { UpdateGameDto } from './dto/updateGame.dto';
 import { GameEntity } from './game.entity';
 
 @Injectable()
@@ -19,7 +20,7 @@ export class GameService {
    * Update if id is defined
    * @param createGameDto 
    */
-  async saveGame(createGameDto: CreateGameDto): Promise<GameEntity> {
+  async saveGame(createGameDto: CreateGameDto) {
     const newGame = this.createGame({
       ...createGameDto,
       upload: createGameDto.upload ?? 'undefined'
@@ -27,15 +28,21 @@ export class GameService {
     return this.gameRepository.save(newGame);
   }
 
-  updateGame(createGameDto: Partial<CreateGameDto>): string {
-    return 'is working';
+  async updateGame(id: string, updateGameDto: Partial<UpdateGameDto>) {
+    if (id) {
+      const game = await this.gameRepository.findOneOrFail(id)
+      const updatedGame = {...game, ...updateGameDto }
+      return this.gameRepository.save(updatedGame);
+    }
+    throw new HttpException('Could not save a video game.', HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  deleteGames() {
-    console.log('to be implement');
+  async deleteGames(ids: string[]) {
+    const games = await this.gameRepository.findByIds(ids);
+    return this.gameRepository.remove(games);
   }
 
-  private createGame(entityLike: GameEntity): GameEntity {
+  private createGame(entityLike: GameEntity) {
     const newGame = new GameEntity();
     return {...newGame, ...entityLike};
   }
