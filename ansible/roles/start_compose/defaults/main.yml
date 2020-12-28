@@ -32,4 +32,7 @@ rest_db_port: 5432
 rest_db_host: rest-db
 rest_db_name: postgresdb
 
-www_static_dir: /var/www/backend/static/
+working_frontend_dir: "{{playbook_dir}}/../frontend"
+working_frontend_dist_dir: "{{working_frontend_dir}}/dist"
+www_frontend_dir: /var/www/frontend
+www_static_dir: "{{www_frontend_dir}}/app"

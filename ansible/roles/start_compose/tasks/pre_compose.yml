@@ -27,9 +27,24 @@
     dest: "{{nginx_conf_dir}}/nginx.conf"
     mode: 0766
 
-- name: install services npm dependencies
+- name: install backend dependencies
   shell:
     cmd: "yarn install --frozen-lockfile"
     chdir: "{{working_rest_server_dir}}"
   register: yarn_install
   failed_when: "yarn_install.rc != 0 and yarn_install.rc != 1"
+
+- name: install frontend dependencies
+  shell:
+    cmd: "yarn install --frozen-lockfile"
+    chdir: "{{working_frontend_dir}}"
+  register: yarn_install
+  failed_when: "yarn_install.rc != 0 and yarn_install.rc != 1"
+
+- name: build frontend app
+  shell:
+    cmd: "yarn build"
+    chdir: "{{working_frontend_dir}}"
+  register: yarn_build
+  failed_when: "yarn_build.rc != 0 and yarn_build.rc != 1"
+

@@ -22,7 +22,7 @@ services:
       - "80:80"
     volumes:
       - "{{nginx_conf_dir}}/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf"
-      - "{{working_rest_server_dir}}/testing:{{www_static_dir}}"
+      - "{{working_frontend_dist_dir}}:{{www_frontend_dir}}"
     networks:
       - gamex_net
 
