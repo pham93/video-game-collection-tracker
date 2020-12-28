@@ -1,8 +1,8 @@
 version: '3'
 networks:
-  gamex_gamer-camp:
+  gamex_gamex_net:
     external: true
-  gamex_keycloak-net:
+  gamex_keycloak_net:
     external: true
 
 services:
@@ -17,8 +17,8 @@ services:
       - "5050:80"
     restart: unless-stopped
     networks:
-      - gamex_gamer-camp
-      - gamex_keycloak-net
+      - gamex_gamex_net
+      - gamex_keycloak_net
 
 volumes:
   pgadmin-datastore:
