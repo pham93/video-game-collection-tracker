@@ -2,26 +2,51 @@
 Our app helps users organize and keep track of their video game collections. It offers the user a neatly organized list of queryable titles within their collection. It also leverages wish-lists to help users keep track of games they want to play. The appliation treats titles as sigle items, allowing users to see a nice summary of the game, what platforms the game is compatible with, and what developer/publishers are in their collection. Lastly it also allows users to rate games within their collection to help show which titles are their favorite and least favorite. 
 
 ## Software Requirements
+* Git (of course)
 * Docker (https://www.docker.com)
-* Postgres (https://hub.docker.com/_/postgres)
-* Django (https://hub.docker.com/_/django)
+* Ansible version > 2.7
+* Node & NPM & Yarn & Lerna. Node > 10.14
+* WSL 1 or WSL 2 with Docker Desktop, or linux environment
 
 ## Installation
+Run the playbook to install all require dev tools (node, yarn, and lerna) for debian distro (ubuntu, debian, xubuntu, etc).
+If you're not running debian flavor, follow your distro for instruction to install these packages
 ```bash
-docker-build .
-docker-compose run django bash
-python manage.py migrate
-python manage.py createsuperuser
+cd {repo}/ansible
+ansible-playbook install_require_binaries_playbook.yml
 ```
 
 ## Getting Started
-To run the Video Game Collection Tracker app in a powershell/terminal please run
+Run the deploy playbook to install all the images, preparing all the setup and start docker-compose
+Pass in server_host_url. This is the host machine (one that serve all the docker containers).
+server_host_url is needed for nginx and keycloak
+
 ```bash
-docker-compose up
+cd {repo}/ansible
+ansible-playbook deploy_dev_playbook.yml -e "server_host_url=${your host ip address}"
 ```
 Then once the container starts you should be able to nagivate to the link below to acces the application.
+```bash
+http://localhost/app
+```
+This will redirect you to keycloak for authentication. For development, you can use 
+username: admin, password: password
 
-http://localhost:8080
+
+## API
+To accesss api or swagger ui
+```bash
+http://localhost/api
+http://localhost/swagger
+```
+
+## Keycloak admin
+To access the keycloak admin console
+username: admin
+password: password
+```bash
+http://localhost/auth
+```
 
 # Diagrams
 
