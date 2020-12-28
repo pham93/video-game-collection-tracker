@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import videoGameService from "../service/VideoGameService";
+import videoGameService from "../service/videoGame.service";
 import { selectedGameIds, useGetGames } from "../state/gamesState";
 
 export default defineComponent({
@@ -17,7 +17,7 @@ export default defineComponent({
     const handleDelete = () => {
       try {
         videoGameService.deleteVideoGames(selectedGameIds.value);
-        games.value = games.value?.filter(e => !selectedGameIds.value.includes(e.uuid))
+        games.value = games.value?.filter(e => !selectedGameIds.value.includes(e.id))
       } catch (e) {
         console.log(e);
       }

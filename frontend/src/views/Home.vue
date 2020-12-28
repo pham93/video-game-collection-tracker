@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "vue";
-import videoGameService from '../service/VideoGameService';
+import videoGameService from '../service/videoGame.service';
 import { useGetGames } from "../state/gamesState";
 
 

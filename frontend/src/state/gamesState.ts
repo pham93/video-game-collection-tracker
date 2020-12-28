@@ -1,7 +1,8 @@
-import videoGameService from "@/service/VideoGameService";
+import { GameT } from '@/model/game.model';
+import videoGameService from "@/service/videoGame.service";
 import { onMounted, ref } from "vue";
 
-export const games = ref<any[]|null|undefined>(null);
+export const games = ref<GameT[]|null|undefined>(null);
 
 export const useGetGames = () => {
     onMounted(async () => {

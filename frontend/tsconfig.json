@@ -17,6 +17,9 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "service": [
+        "src/service/*"
       ]
     },
     "lib": [

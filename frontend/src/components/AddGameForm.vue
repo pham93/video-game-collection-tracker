@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive, toRefs, onMounted } from "vue";
-import videoGameService from '../service/VideoGameService';
+import videoGameService from '../service/videoGame.service';
 import { useGetGames } from "../state/gamesState";
 
     export default defineComponent({
@@ -76,16 +76,13 @@ import { useGetGames } from "../state/gamesState";
           ]);
           const { games } = useGetGames();
           const sendGame = async () => {
-              console.log(formValues);
               try {
                   const newGame = await videoGameService.saveVideoGame(formValues);
-                  console.log(games)
-                  console.log(games.value)
                   if (games.value) {
-                      games.value.push(newGame[0]);
+                      games.value.push(newGame);
                   }
               } catch (e) {
-                  console.log(e);
+                  console.error(e);
               }
           };
           return {

@@ -1,5 +1,5 @@
 <template>
-    <DataTable :value="games" v-model:selection="selections" sortMode="multiple" dataKey="uuid">
+    <DataTable :value="games" v-model:selection="selections" sortMode="multiple" dataKey="id">
         <Column selectionMode="multiple" headerStyle="width: 3em"></Column>
         <Column field="title" header="Title" :sortable="true"></Column>
         <Column field="summary" header="Summary" :sortable="true"></Column>
@@ -15,16 +15,17 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, watchEffect } from "vue";
-import videoGameService from "../service/VideoGameService";
+import videoGameService from "../service/videoGame.service";
+import { GameT } from "../model/game.model"
 import { selectedGameIds, useGetGames } from "../state/gamesState";
 
 export default defineComponent({
     name: "GameDataTable",
     setup() {
         const { games } = useGetGames();
-        const selections = ref<any[]>([]);
+        const selections = ref<GameT[]>([]);
         watchEffect(() => {
-            selectedGameIds.value = selections.value.map(e => e.uuid);
+            selectedGameIds.value = selections.value.map(e => e.id);
         });
         return {
             games,

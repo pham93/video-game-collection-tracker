@@ -1,3 +1,4 @@
+import { GameT } from '@/model/game.model';
 import axios from 'axios';
 type GameObject = {
     pk: string,
@@ -6,8 +7,8 @@ type GameObject = {
 
 class VideoGameService {
     async getVideoGames() {
-        const rawJson = await axios.get('/api/videogames');
-        return rawJson.data.map((e: GameObject) => ({ uuid:e.pk, ...e.fields }));
+        const result = await axios.get<GameT[]>('/api/videogames');
+        return result.data;
     }
     
     async saveVideoGame(videoGame: any) {
@@ -22,15 +23,13 @@ class VideoGameService {
             "progress": videoGame.selectedProgress.name,
             "upload": videoGame.imgUrlText
         }
-        const rawString = await axios.post('/api/videogames', payload);
-        const rawJson = JSON.parse(rawString.data)
-        console.log(rawJson);
-        return rawJson.map((e: GameObject) => ({ uuid:e.pk, ...e.fields }));
+        const result = await axios.post<GameT>('/api/videogames', payload);
+        return result.data;
     }
 
     async deleteVideoGames(gameIds: string[]) {
         await axios.delete('/api/videogames', {
-            data: gameIds
+            data: { ids: gameIds }
         });
     }
 }
