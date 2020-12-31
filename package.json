@@ -1,0 +1,22 @@
+{
+  "name": "video-game-collection-tracker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/pham93/video-game-collection-tracker.git",
+  "author": "pham93 <gitloc2016@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "aws-sdk": "^2.819.0",
+    "lerna": "^3.22.1",
+    "npm-run-all": "^4.1.5",
+    "targz": "^1.0.1"
+  },
+  "scripts": {
+    "lerna": "lerna",
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build --parallel",
+    "get:packages": "lerna ls --json --all",
+    "upload": "node deploy.js",
+    "deploy": "npm-run-all bootstrap build upload"
+  }
+}

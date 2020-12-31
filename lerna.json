@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "npmClient": "yarn",
+  "packages": [
+    "frontend",
+    "server"
+  ],
+  "command": {
+    "bootstrap": {
+      "npmClient": "yarn",
+      "npmClientArgs": ["--frozen-lockfile"]
+    }
+  }
+}
