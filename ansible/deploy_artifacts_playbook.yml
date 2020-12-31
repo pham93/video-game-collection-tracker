@@ -1,7 +1,26 @@
-
 ---
+#
+# download artifacts from s3 and deploy it to a mounted persistence volume
+# this is starting dev or prod kubernetes cluster
+# This playbook requires python-pip, bota3 (pip install bota3) and aws_s3 collection and ansbile >= v2.9 
+# to install the collection
+# ansible-galaxy collection install amazon.aws
+#
+# Example
+# ansible-playbook deploy_artifacts_playbook.yml
+#
 - hosts: localhost
   vars_files:
     - "group_vars/vault"
   roles:
     - roles/download_artifacts
+  tags:
+    - download
+
+- hosts: localhost
+  vars_files:
+    - "group_vars/vault"
+  roles:
+    - roles/deploy_artifacts
+  tags:
+    - deploy

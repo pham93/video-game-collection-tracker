@@ -1,4 +1,13 @@
 ---
+# This playbook is for starting docker-compose with all the services
+# Use this playbook for development
+#
+# Example
+# require vars
+# server_host_url - this url is needed for keycloak for redirection
+#
+# ansible-playbook deploy_dev_playbook.yml -e "server_host_url=192.168.1.11"
+#
 - hosts: localhost
   vars_files:
     - "group_vars/vault"
