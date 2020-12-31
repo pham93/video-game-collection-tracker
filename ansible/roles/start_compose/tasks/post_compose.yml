@@ -6,7 +6,8 @@
   retries: 20
   until: "curl_res.rc == 0"
 
-- debug:
+- name: 'debug'
+  debug:
     msg: "{{curl_res}}"
 
 - name: Connecting to keycloak admin API

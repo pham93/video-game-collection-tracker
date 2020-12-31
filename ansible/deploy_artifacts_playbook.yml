@@ -1,6 +1,7 @@
+
 ---
 - hosts: localhost
   vars_files:
     - "group_vars/vault"
   roles:
-    - roles/start_compose
+    - roles/download_artifacts

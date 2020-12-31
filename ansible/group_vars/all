@@ -6,3 +6,7 @@ keycloak_user: "{{vault_keycloak_user}}"
 
 db_user: "{{vault_db_user}}"
 db_password: "{{vault_db_password}}"
+
+aws_access_key: "{{vault_aws_access_key}}"
+aws_secret_key: "{{vault_aws_secret_key}}"
+aws_artifacts_bucket: "{{vault_aws_artifacts_bucket}}"
