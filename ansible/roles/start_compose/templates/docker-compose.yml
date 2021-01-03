@@ -14,10 +14,9 @@ services:
   ###################################################################
   ## GATEWAY
   ###################################################################
-  openresty:
-    build: {{openresty_dir}}
+  {{nginx_service_name}}:
     restart: on-failure
-    image: openresty-oidc:latest
+    image: redsolid/openresty-oidc
     ports:
       - "80:80"
     volumes:
@@ -26,7 +25,7 @@ services:
     networks:
       - gamex_net
 
-  server_gateway:
+  {{server_gateway_service_name}}:
     restart: on-failure
     image: node:14.15.3-alpine3.10
     user: "node"
@@ -38,7 +37,7 @@ services:
       - "{{server_gateway_dir}}/entrypoint.sh:/entrypoint.sh"
       - "{{server_gateway_dir}}/config.yml:/config.yml"
     ports:
-      - "3000:3000"
+      - "{{server_gateway_service_port}}:{{server_gateway_service_port}}"
     command: sh /entrypoint.sh
     networks:
       - gamex_net
@@ -46,7 +45,7 @@ services:
   ##################################################################
   ## KEYCLOAK AUTH
   ##################################################################
-  keycloak-db:
+  {{keycloak_db_service_name}}:
     image: postgres:13.1-alpine
     restart: on-failure
     volumes:
@@ -60,7 +59,7 @@ services:
     networks:
       - keycloak_net
 
-  keycloak:
+  {{keycloak_service_name}}:
     image: jboss/keycloak:12.0.1
     restart: on-failure
     environment:
@@ -69,14 +68,14 @@ services:
       - DB_VENDOR=postgres
       - DB_USER={{db_user}}
       - DB_PASSWORD={{db_password}}
-      - DB_ADDR=keycloak-db
+      - DB_ADDR={{keycloak_db_service_name}}
       - DB_PORT=5432
       - DB_DATABASE=keycloak
       - PROXY_ADDRESS_FORWARDING=true
     ports:
-      - "8080:8080"
+      - "{{keycloak_service_port}}:{{keycloak_service_port}}"
     depends_on:
-      - keycloak-db
+      - {{keycloak_db_service_name}}
     networks:
       - keycloak_net
       - gamex_net
@@ -84,24 +83,24 @@ services:
   ##################################################################
   ## MICROSERVICE STACK
   ##################################################################
-  {{ms_userservice_host}}:
+  {{ms_user_service_name}}:
     restart: on-failure
     image: node:14.15.3-alpine3.10
     user: "node"
     working_dir: /home/node/app
     environment:
       - NODE_ENV={{app_mode}}
-      - PORT={{ms_userservice_port}}
+      - PORT={{ms_user_service_port}}
     volumes:
       - "{{working_rest_server_dir}}:/home/node/app"
       - "{{ms_userservice_dir}}/entrypoint.sh:/entrypoint.sh"
     ports:
-      - "{{ms_userservice_port}}:{{ms_userservice_port}}"
+      - "{{ms_user_service_port}}:{{ms_user_service_port}}"
     command: sh /entrypoint.sh
     networks:
       - gamex_net
 
-  rest-db:
+  {{rest_db_service_name}}:
     restart: on-failure
     image: postgres:13.1-alpine
     environment:

@@ -1,0 +1,12 @@
+database:
+  type: postgres
+  host: fat-panda-database-1-instance-1.cb2an3lemtsi.us-east-2.rds.amazonaws.com
+  port: 5432
+  username: fatpanda
+  password: password
+  database: postgres
+
+microservices:
+  userservice:
+    port: 4000
+    host: ms_userservice

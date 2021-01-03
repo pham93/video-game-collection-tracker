@@ -1,0 +1,10 @@
+---
+- name: "Create {{kube_namespace}} ignore if already exists"
+  shell: "kubectl apply -f {{kube_dir}}/bases/namespace.yaml"
+
+- name: "Kustomize build a yaml for local volume"
+  shell: "kustomize build {{kube_local_volume_dir}} > {{kube_local_volume_dir}}/final.yaml"
+
+- name: "Create a local storage class and local persistent volume"
+  shell: "kubectl apply -f {{kube_local_volume_dir}}/final.yaml"
+

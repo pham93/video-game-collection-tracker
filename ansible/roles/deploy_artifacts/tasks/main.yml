@@ -1,0 +1,6 @@
+---
+- name: Deploy artifacts
+  include: deploy_artifacts.yml
+  when: "'present' in states"
+  tags:
+  - deploy_artifacts

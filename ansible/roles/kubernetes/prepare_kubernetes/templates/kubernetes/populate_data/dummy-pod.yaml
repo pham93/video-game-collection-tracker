@@ -1,0 +1,28 @@
+# The dummy pod is use for populating the volume with data
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dummy
+  namespace: {{kube_namespace}}
+spec:
+  containers:
+  - name: dummy
+    image: node
+    workingDir: /mnt/data
+    env:
+      - name: NODE_ENV
+        value: development
+    resources:
+      limits:
+        memory: "500Mi"
+        cpu: "500m"
+    ports:
+    - containerPort: 80
+    command: ["sh", "-c", "tail -f /dev/null"]
+    volumeMounts:
+      - name: pv-storage
+        mountPath: /mnt/data
+  volumes:
+  - name: pv-storage
+    persistentVolumeClaim:
+        claimName: local-pvc

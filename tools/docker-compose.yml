@@ -1,9 +1,9 @@
 version: '3'
 networks:
   gamex_gamex_net:
-    external: true
+    # external: true
   gamex_keycloak_net:
-    external: true
+    # external: true
 
 services:
   pgadmin:

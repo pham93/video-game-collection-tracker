@@ -1,0 +1,11 @@
+# kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: {{kube_namespace}}
+configMapGenerator:
+- name: server-configmap
+  files:
+  - config.yml
+resources:
+  - "service.yaml"
+  - "deployment.yaml"

@@ -1,0 +1,16 @@
+---
+- name: Check if ingress nginx controller exists
+  shell: 'kubectl get all -n ingress-nginx'
+  register: output
+
+- name: Install ingress nginx controller on kubernetes cluster on ingress-nginx namespace
+  shell: 'kubectl apply -f {{kube_ingress_controller}}'
+  register: output
+  when: "'No resources found in' in output.stderr"
+
+
+- name: 'Check if ingress nginx sucessfully installed'
+  shell: 'kubectl wait deployment/ingress-nginx-controller --for=condition=available -n ingress-nginx'
+  register: wait_output
+  retries: 3
+  until: "'condition met' in wait_output.stdout"

@@ -1,3 +1,1 @@
 tmp_location: /tmp/artifacts
-staging_dir: "{{ansible_env.HOME}}/staging_dir/dev"
-artifacts_dir: "{{staging_dir}}/artifacts"

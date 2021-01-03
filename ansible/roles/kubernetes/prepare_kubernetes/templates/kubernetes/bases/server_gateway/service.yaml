@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{server_gateway_service_name}}
+spec:
+  selector:
+    app: server-gateway
+  ports:
+  - port: {{server_gateway_service_port}}
+    targetPort: {{server_gateway_service_port}}

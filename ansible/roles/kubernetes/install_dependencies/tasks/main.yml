@@ -1,0 +1,24 @@
+---
+- name: Remove local volume
+  include: remove_local_volume.yml
+  when: "'absent' in states and kube_environment == 'stage'"
+  tags:
+  - local_volume
+
+- name: Remove ingress_controller
+  include: remove_ingress_controller.yml
+  when: "'absent' in states"
+  tags:
+  - ingress
+
+- name: Add ingress controller
+  include: add_ingress_controller.yml
+  when: "'present' in states"
+  tags:
+  - ingress
+
+- name: Add local volume
+  include: add_local_volume.yml
+  when: "'present' in states and kube_environment == 'stage'"
+  tags:
+  - local_volume

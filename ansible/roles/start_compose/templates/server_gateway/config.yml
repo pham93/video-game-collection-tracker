@@ -1,12 +1,12 @@
 database:
   type: postgres
-  host: {{rest_db_host}}
-  port: {{rest_db_port}}
+  host: {{rest_db_service_name}}
+  port: {{rest_db_service_port}}
   username: {{db_user}}
   password: {{db_password}}
   database: {{rest_db_name}}
 
 microservices:
   userservice:
-    port: {{ms_userservice_port}}
-    host: {{ms_userservice_host}}
+    port: {{ms_user_service_port}}
+    host: {{ms_user_service_name}}

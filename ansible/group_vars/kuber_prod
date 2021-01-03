@@ -1,0 +1,15 @@
+staging_dir: "{{ansible_env.HOME}}/staging_dir/kuber_prod"
+artifacts_dir: "{{staging_dir}}/artifacts"
+
+kube_namespace: gamex
+kube_environment: production
+
+kube_dir: "{{staging_dir}}/kubernetes"
+kube_environment_dir: "{{kube_dir}}/prod"
+kube_volume_dir: "{{kube_environment_dir}}/volumes/local
+
+kube_ingress_controller: "{{kube_dir}}/bases/ingress/local-controller/local-controller.yaml"
+
+
+dummy_pod_yaml_file: "{{kube_dir}}/populate_data/dummy-pod.yaml"
+volume_mount_point: /mnt/data

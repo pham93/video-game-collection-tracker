@@ -1,0 +1,24 @@
+---
+- name: Check if local persistent volume exists
+  shell: "kubectl get pv local-pv"
+  ignore_errors: "true"
+  register: output
+
+- name: status
+  shell: "kubectl get pv local-pv -o json"
+  register: json
+  when: "'not found' not in output.stderr"
+
+- name: setfacto
+  set_fact:
+      volume_status: "{{json.stdout | from_json | json_query('status.phase')}}"
+  when: "'not found' not in output.stderr"
+
+- name: Ouptut volume status
+  debug:
+    msg: "{{volume_status}}"
+  when: "'not found' not in output.stderr"
+
+- name: Remove persistent volume and persitent volume claim
+  shell: "kubectl delete -f {{kube_local_volume_dir}}/final.yaml"
+  when: "'not found' not in output.stderr and 'Bound' not in volume_status"

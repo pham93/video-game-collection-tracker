@@ -1,0 +1,14 @@
+---
+- name: Kustomize build app yaml
+  shell: "kustomize build {{kube_environment_dir}} > {{kube_environment_dir}}/final.yaml"
+
+- name: deploy all deployments
+  shell: "kubectl apply -f {{kube_environment_dir}}/final.yaml"
+  register: output
+  failed_when: "output.rc != 0 and output.rc != 1"
+
+- name: wait for all deployments to be available
+  shell: "kubectl wait --for=condition=available --timeout=60s --all deployments -n {{kube_namespace}}"
+  register: output
+  retries: 10
+  until: "'condition met' in output.stdout and output.rc == 0"

@@ -1,0 +1,6 @@
+---
+- name: Prepare kubernetes
+  include: prepare_kubernetes.yml
+  when: "'present' in states"
+  tags:
+  - prepare_kubernetes

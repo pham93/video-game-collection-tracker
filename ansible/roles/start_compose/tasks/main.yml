@@ -1,10 +1,18 @@
 ---
 
+- name: "docker compose down on {{app_name}}"
+  shell: "docker-compose -p {{app_name}} -f {{staging_dir}}/docker-compose.yml down"
+  when: "'absent' in states"
+
 - name: preparing before starting compose
   include_tasks: pre_compose.yml
+  when: "'present' in states"
 
 - name: starting compose
   shell: "docker-compose -p {{app_name}} -f {{staging_dir}}/docker-compose.yml up -d"
+  when: "'present' in states"
 
-- name: post compose
-  include_tasks: post_compose.yml
+- name: Add keycloak client
+  include_role:
+      name: roles/keycloak/add_client
+  when: "'present' in states"

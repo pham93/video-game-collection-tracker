@@ -11,9 +11,13 @@ const artifacts = Object.freeze({
     dst: `${TMP_LOCATION}/frontend.tar.gz`,
   },
   backend: {
-    src: 'server/dist',
+    src: 'server',
     dst: `${TMP_LOCATION}/backend.tar.gz`,
-  },
+    includes: [
+      'server/dist',
+      'server/node_modules'
+    ]
+ },
 });
 
 // Load the AWS SDK for Node.js
@@ -39,16 +43,28 @@ s3.listBuckets(function(err, data) {
 });
 
 
-function compress(src, dest, callback) {
-  console.log(`Creating ${dest}`);
+function compress(obj, callback) {
+  const { src, dst, includes } = obj;
+  console.log(`Creating ${dst}`);
   targz.compress({
     src,
-    dest
+    dest: dst,
+    tar: {
+      ignore: function(name) {
+        if (!includes) {
+          return false;
+        }
+        const included = (includes || []).some(e => {
+          return name.startsWith(e);
+        });
+        return !included;
+      }
+    },
   }, function(err){
     if(err) {
         console.log(err);
     } else {
-      callback(dest);
+      callback(dst);
     }
   });
 }
@@ -75,8 +91,7 @@ function uploadArtifacts() {
   }
 
   Object.values(artifacts).forEach((value) => {
-    const { src, dst } = value;
-    compress(src, dst, upload);
+    compress(value, upload);
   });
 }
 

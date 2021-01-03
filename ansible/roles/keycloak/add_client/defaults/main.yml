@@ -1,0 +1,9 @@
+# inputs
+# - keycloak_exec
+# - keycloak_service_name
+# - keycloak_service_port
+
+keycloak_admin_rest_url: "http://{{keycloak_service_name}}:{{keycloak_service_port}}/auth"
+keycloak_home_dir: "/opt/jboss/keycloak"
+keycloak_kcadm_bin: "{{keycloak_home_dir}}/bin/kcadm.sh"
+keycloak_kcadm_exec: "{{keycloak_exec}} sh {{keycloak_kcadm_bin}}"

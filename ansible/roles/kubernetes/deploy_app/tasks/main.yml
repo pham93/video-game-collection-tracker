@@ -1,0 +1,15 @@
+---
+- name: updeploy app
+  include: undeploy_app.yml
+  when: "'absent' in states"
+
+- name: deploy app
+  include: deploy_app.yml
+  when: "'present' in states"
+
+- name: update keycloak
+  include_role:
+    name: roles/keycloak/add_client
+  when: "'started' in states"
+
+

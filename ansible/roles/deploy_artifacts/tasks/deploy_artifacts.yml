@@ -1,0 +1,32 @@
+---
+- name: "Start the dummy pod which has the local volume mounted"
+  shell: "kubectl apply -f {{dummy_pod_yaml_file}}"
+  register: kubectl_out
+  failed_when: "kubectl_out.rc !=0 and kubectl_out.rc != 1"
+
+
+- name: Wait for pod state is running
+  shell: "kubectl wait pods dummy -n {{kube_namespace}} --for=condition=Ready"
+  register: pod_state
+  retries: 5
+  until: "'condition met' in pod_state.stdout"
+
+- name: "find all artifacts"
+  shell: "ls -1A {{artifacts_dir}}"
+  register: artifact_list
+
+- name: Clean folder
+  shell: "kubectl exec dummy -n {{kube_namespace}} -- rm {{volume_mount_point}}/{{item}} -rf"
+  loop:
+    "{{artifact_list.stdout_lines}}"
+
+- name: "Copy each artifact to mounted volume"
+  shell: "kubectl cp {{artifacts_dir}}/{{item}} {{kube_namespace}}/dummy:{{volume_mount_point}}/"
+  register: kubectl_out
+  loop:
+    "{{artifact_list.stdout_lines}}"
+
+- name: "Delete the dummy pod"
+  shell: "kubectl delete -f {{dummy_pod_yaml_file}}"
+  register: kubectl_out
+  failed_when: "'deleted' not in kubectl_out.stdout"

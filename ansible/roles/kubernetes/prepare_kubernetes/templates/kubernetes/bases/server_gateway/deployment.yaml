@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-gateway
+spec:
+  selector:
+    matchLabels:
+      app: server-gateway
+  template:
+    metadata:
+      labels:
+        app: server-gateway
+    spec:
+      containers:
+      - name: server-gateway
+        image: node:14.15.3-alpine3.10
+        workingDir: /mnt/data
+        env:
+          - name: NODE_ENV
+            value: development
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: {{server_gateway_service_port}}
+        volumeMounts:
+          - name: local-server-pvc
+            mountPath: /mnt/data
+          - name: config-volume
+            mountPath: /config.yml
+            subPath: config.yml
+        command: ["sh", "-c", "node backend/dist/apps/server_gateway/main.js"]
+      volumes:
+      - name: local-server-pvc
+        persistentVolumeClaim:
+            claimName: local-pvc
+      - name: config-volume
+        configMap:
+          name: server-configmap

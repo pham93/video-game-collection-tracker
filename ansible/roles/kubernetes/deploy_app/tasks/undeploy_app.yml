@@ -1,0 +1,11 @@
+---
+- name: "Remove all deployments in {{kube_namespace}}"
+  shell: "kubectl delete -f {{kube_environment_dir}}/final.yaml"
+  register: output
+  failed_when: "output.rc != 0 and output.rc != 1"
+
+- name: "wait until everything is removed"
+  shell: "kubectl get all -n {{kube_namespace}}"
+  register: output
+  retries: 25
+  until: "'No resources found in' in output.stderr"

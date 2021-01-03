@@ -1,0 +1,6 @@
+---
+- name: "Copy nginx.conf to {{nginx_conf_dir}}"
+  template:
+    src: openresty/nginx.conf
+    dest: "{{nginx_conf_dir}}/nginx.conf"
+    mode: 0766

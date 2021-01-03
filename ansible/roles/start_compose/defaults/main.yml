@@ -2,37 +2,45 @@
 working_rest_server_dir: "{{playbook_dir}}/../server"
 staging_dir: "{{ansible_env.HOME}}/staging_dir"
 
+server_gateway_dir: "{{staging_dir}}/server_gateway"
+
 openresty_dir: "{{staging_dir}}/openresty"
 nginx_conf_dir: "{{openresty_dir}}/nginx/conf"
 
-keycloak_service_name: keycloak
-keycloak_port: 8080
-keycloak_realm: master
-client_secret: "{{vault_client_secret}}"
-keycloak_main_client: "gamex"
-keycloak_admin_rest_url: "http://{{keycloak_service_name}}:{{keycloak_port}}/auth"
-keycloak_home_dir: "/opt/jboss/keycloak"
-kcadm_bin: "{{keycloak_home_dir}}/bin/kcadm.sh"
-keycloak_exec: docker-compose -p {{app_name}} -f {{staging_dir}}/docker-compose.yml exec -T keycloak
-kcadm_exec: " {{keycloak_exec}} sh {{kcadm_bin}}"
-
-server_gateway_dir: "{{staging_dir}}/server_gateway"
-
 microservices_dir: "{{staging_dir}}/microservices"
 ms_userservice_dir: "{{microservices_dir}}/userservice"
-ms_userservice_host: ms_userservice
-ms_userservice_port: 4000
 
 server_dir_collection:
   - "{{nginx_conf_dir}}"
   - "{{ms_userservice_dir}}"
   - "{{server_gateway_dir}}"
 
-rest_db_port: 5432
-rest_db_host: rest-db
-rest_db_name: postgresdb
-
 working_frontend_dir: "{{playbook_dir}}/../frontend"
 working_frontend_dist_dir: "{{working_frontend_dir}}/dist"
 www_frontend_dir: /var/www/frontend
 www_static_dir: "{{www_frontend_dir}}/app"
+
+#######################
+# services
+#######################
+server_gateway_service_name: server-gateway-service
+server_gateway_service_port: 3000
+
+ms_user_service_name: ms_user-service
+ms_user_service_port: 4000
+
+rest_db_service_name: rest-db-service
+rest_db_service_port: 5432
+rest_db_name: postgresdb
+
+nginx_service_name: nginx-service
+nginx_service_port: 80
+
+keycloak_service_name: keycloak-service
+keycloak_service_port: 8080
+
+keycloak_db_service_name: keycloak-db-service
+keycloak_db_service_port: 5432
+
+
+keycloak_exec: "docker-compose -p {{app_name}} -f {{staging_dir}}/docker-compose.yml exec -T {{keycloak_service_name}}"

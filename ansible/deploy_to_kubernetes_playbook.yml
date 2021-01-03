@@ -1,0 +1,30 @@
+---
+
+- hosts: localhost
+  vars_files:
+    - "group_vars/vault"
+    - "group_vars/kuber_stage.yml"
+  roles:
+    - roles/kubernetes/prepare_kubernetes
+    - roles/kubernetes/install_dependencies
+  tags:
+    - prepare_kubernetes
+
+- hosts: localhost
+  vars_files:
+    - "group_vars/vault"
+    - "group_vars/kuber_stage.yml"
+  roles:
+    - roles/download_artifacts
+    - roles/deploy_artifacts
+  tags:
+    - prepare_artifacts
+
+- hosts: localhost
+  vars_files:
+    - "group_vars/vault"
+    - "group_vars/kuber_stage.yml"
+  roles:
+    - roles/kubernetes/deploy_app
+  tags:
+    - deploy_app

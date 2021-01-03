@@ -16,16 +16,13 @@
     src: "{{item}}"
     dest: "{{staging_dir}}/{{item}}"
   loop:
-    - "openresty/Dockerfile"
     - "server_gateway/entrypoint.sh"
     - "server_gateway/config.yml"
     - "microservices/userservice/entrypoint.sh"
 
-- name: "Copy nginx.conf to {{nginx_conf_dir}}"
-  template:
-    src: openresty/nginx.conf
-    dest: "{{nginx_conf_dir}}/nginx.conf"
-    mode: 0766
+- name: Include nginx conf file
+  include_role:
+    name: roles/add_nginx_config
 
 - name: install backend dependencies
   shell:

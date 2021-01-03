@@ -12,15 +12,17 @@
 - hosts: localhost
   vars_files:
     - "group_vars/vault"
+    - "group_vars/kuber_stage"
   roles:
     - roles/download_artifacts
   tags:
-    - download
+    - download_artifacts
 
 - hosts: localhost
   vars_files:
     - "group_vars/vault"
+    - "group_vars/kuber_stage"
   roles:
     - roles/deploy_artifacts
   tags:
-    - deploy
+    - deploy_artifacts
