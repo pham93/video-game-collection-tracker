@@ -7,12 +7,22 @@ Our app helps users organize and keep track of their video game collections. It 
 
 ## Software Requirements
 * Git (of course)
-* Docker (https://www.docker.com)
-* Ansible version > 2.7
+* Docker, Kubernetes (https://www.docker.com). 
+* Ansible version > 2.9
 * Node & NPM & Yarn & Lerna. Node > 10.14
-* WSL 1 or WSL 2 with Docker Desktop, or linux environment
+
+Windows Users
+* WSL 1 or WSL 2 with Docker Desktop. Use Docker Desktop to set default distro and enable kubernetes
 
 ## Installation
+Password file is needed to run ansible
+create ~/.ansible.cfg file in home directory
+The password is provided by your administrator
+```
+[defaults]
+vault_password_file = /path/to/file.txt
+```
+
 Run the playbook to install all require dev tools (node, yarn, and lerna) for debian distro (ubuntu, debian, xubuntu, etc).
 If you're not running debian flavor, follow your distro for instruction to install these packages
 ```bash
