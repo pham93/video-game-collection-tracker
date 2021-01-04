@@ -6,9 +6,17 @@
     - "group_vars/kuber_stage.yml"
   roles:
     - roles/kubernetes/prepare_kubernetes
-    - roles/kubernetes/install_dependencies
   tags:
     - prepare_kubernetes
+
+- hosts: localhost
+  vars_files:
+    - "group_vars/vault"
+    - "group_vars/kuber_stage.yml"
+  roles:
+    - roles/kubernetes/install_dependencies
+  tags:
+    - install_dependencies
 
 - hosts: localhost
   vars_files:

@@ -1,24 +1,36 @@
 ---
 - name: Remove local volume
-  include: remove_local_volume.yml
+  include: local_volume/remove_local_volume.yml
   when: "'absent' in states and kube_environment == 'stage'"
   tags:
   - local_volume
 
 - name: Remove ingress_controller
-  include: remove_ingress_controller.yml
+  include: ingress_controller/remove_ingress_controller.yml
   when: "'absent' in states"
   tags:
   - ingress
 
+- name: Remove cert manager
+  include: cert_manager/remove_cert_manager.yml
+  when: "'absent' in states"
+  tags:
+  - cert_manager
+
 - name: Add ingress controller
-  include: add_ingress_controller.yml
+  include: ingress_controller/add_ingress_controller.yml
   when: "'present' in states"
   tags:
   - ingress
 
+- name: Add cert manager
+  include: cert_manager/add_cert_manager.yml
+  when: "'present' in states"
+  tags:
+  - cert_manager
+
 - name: Add local volume
-  include: add_local_volume.yml
+  include: local_volume/add_local_volume.yml
   when: "'present' in states and kube_environment == 'stage'"
   tags:
   - local_volume

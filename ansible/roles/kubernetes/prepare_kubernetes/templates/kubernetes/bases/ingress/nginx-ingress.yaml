@@ -3,7 +3,13 @@ kind: Ingress
 metadata:
   name: nginx-ingress
   namespace: {{kube_namespace}}
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/ingress.allow-http: "false"
+    cert-manager.io/issuer: {{cert_issuer_name}}
 spec:
+  tls:
+  - secretName: nginx-ingress-tls
   rules:
   - http:
       paths:
@@ -13,4 +19,11 @@ spec:
           service:
             name: {{nginx_service_name}}
             port:
-              number: {{ingress_nginx_port}}
+              number: {{nginx_service_port}}
+      - path: /auth/
+        pathType: Prefix
+        backend:
+          service:
+            name: {{keycloak_service_name}}
+            port:
+              number: {{keycloak_service_port}}

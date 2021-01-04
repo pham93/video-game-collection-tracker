@@ -1,0 +1,5 @@
+---
+- name: remove cert manager
+  shell: "kubectl delete -f {{cert_manager_resource_url}}"
+  register: output
+  failed_when: "output.rc != 0 and output.rc != 1"

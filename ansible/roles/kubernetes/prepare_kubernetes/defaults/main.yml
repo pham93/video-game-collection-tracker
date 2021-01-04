@@ -17,3 +17,12 @@ nginx_service_port: 80
 
 keycloak_service_name: keycloak-service
 keycloak_service_port: 8080
+keycloak_service_ssl_port: 8443
+
+
+##############################
+# cert
+##############################
+cert_email: "{{vault_cert_email}}"
+cert_server: https://acme-staging-v02.api.letsencrypt.org/directory
+cert_issuer_name: letsencrypt-staging

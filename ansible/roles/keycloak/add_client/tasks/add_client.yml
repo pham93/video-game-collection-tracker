@@ -28,7 +28,7 @@
     "{{client_ids.stdout | from_json | flatten(levels=1)}}"
 
 - name: "Create {{keycloak_main_client}}"
-  shell: "{{keycloak_kcadm_exec}} create clients -r {{keycloak_realm}} -s clientId={{keycloak_main_client}} -s enabled=true -s secret={{keycloak_client_secret}} -s 'redirectUris=[ \"http://localhost/*\" ]'"
+  shell: "{{keycloak_kcadm_exec}} create clients -r {{keycloak_realm}} -s clientId={{keycloak_main_client}} -s enabled=true -s secret={{keycloak_client_secret}} -s 'redirectUris=[\"{{server_host_url}}/*\"]'"
   register: res
   retries: 2
   until: "res.rc == 0"

@@ -1,0 +1,19 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+ name: {{cert_issuer_name}}
+ namespace: {{kube_namespace}}
+spec:
+ acme:
+   # The ACME server URL
+   server: {{cert_server}} 
+   # Email address used for ACME registration
+   email: {{cert_email}}
+   # Name of a secret used to store the ACME account private key
+   privateKeySecretRef:
+     name: {{cert_issuer_name}}
+   # Enable the HTTP-01 challenge provider
+   solvers:
+   - http01:
+       ingress:
+         class:  nginx

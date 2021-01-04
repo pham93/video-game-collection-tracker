@@ -39,8 +39,8 @@ spec:
             cpu: 1
             memory: 1Gi
         ports:
-        - name: http
-          containerPort: {{keycloak_service_port}}
+        - name: https
+          containerPort: {{keycloak_service_ssl_port}}
         readinessProbe:
           httpGet:
             path: /auth/realms/master

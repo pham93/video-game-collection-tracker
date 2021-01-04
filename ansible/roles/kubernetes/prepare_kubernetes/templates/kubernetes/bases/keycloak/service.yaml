@@ -6,6 +6,9 @@ spec:
   selector:
     app: keycloak
   ports:
+  - name: 'https'
+    port: {{keycloak_service_ssl_port}}
+    targetPort: {{keycloak_service_ssl_port}}
   - name: 'http'
     port: {{keycloak_service_port}}
     targetPort: {{keycloak_service_port}}
