@@ -6,5 +6,6 @@ spec:
   selector:
     app: nginx
   ports:
-  - port: {{nginx_service_port}}
+  - name: "http"
+    port: {{nginx_service_port}}
     targetPort: {{nginx_service_port}}

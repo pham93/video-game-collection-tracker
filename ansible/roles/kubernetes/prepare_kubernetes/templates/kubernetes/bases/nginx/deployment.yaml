@@ -19,7 +19,8 @@ spec:
             memory: "128Mi"
             cpu: "500m"
         ports:
-        - containerPort: {{keycloak_service_port}}
+        - name: "http"
+          containerPort: {{keycloak_service_port}}
         volumeMounts:
           - name: www-pv-storage
             mountPath: {{nginx_mount_path}}
