@@ -5,4 +5,4 @@ resources:
 - ../bases/keycloak
 - ../bases/nginx
 - ../bases/server_gateway
-# - ../bases/istio-gateway
+- ../bases/istio-gateway

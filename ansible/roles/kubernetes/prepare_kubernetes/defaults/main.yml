@@ -3,23 +3,11 @@ nginx_mount_path: /var/www
 nginx_conf_dir: "{{kube_dir}}/bases/nginx"
 www_static_dir: "{{nginx_mount_path}}/frontend/app"
 
-server_gateway_service_name: server-gateway-service
-server_gateway_service_port: 3000
-
-ms_user_service_name: ms_user-service
-ms_user_service_port: 4000
-
-nginx_service_name: nginx-service
-nginx_service_port: 80
-
-keycloak_service_name: keycloak-service
-keycloak_service_port: 8080
-keycloak_service_ssl_port: 8443
-
 
 ##############################
 # cert
 ##############################
 cert_email: "{{vault_cert_email}}"
+cert_secret_name: "{{app_name}}-cert"
 cert_server: https://acme-staging-v02.api.letsencrypt.org/directory
 cert_issuer_name: letsencrypt-staging

@@ -1,0 +1,24 @@
+---
+- name: Check if istio exists
+  shell: 'kubectl get all -n {{istio_namespace}}'
+  register: output
+
+- name: "Install istio on kubernetes cluster on {{istio_namespace}} namespace"
+  shell: 'istioctl install -f {{istio_config_file}} --skip-confirmation'
+  register: output
+  when: "'No resources found in' in output.stderr"
+
+
+- name: 'Check if istio sucessfully installed'
+  shell: 'kubectl wait deployment {{item}} --for=condition=available -n {{istio_namespace}}'
+  register: wait_output
+  retries: 3
+  until: "'condition met' in wait_output.stdout"
+  loop:
+    - istio-ingressgateway
+    - "istiod-{{istiod_revision}}"
+
+- name: "inject istio to {{kube_namespace}}"
+  shell: 'kubectl label namespace {{kube_namespace}} istio-injection=enabled'
+  register: output
+  failed_when: "output.rc != 0 and output.rc != 1"

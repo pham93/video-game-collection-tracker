@@ -15,6 +15,17 @@ Windows Users
 * WSL 1 or WSL 2 with Docker Desktop. Use Docker Desktop to set default distro and enable kubernetes
 
 ## Installation
+APT
+- apt install python-pip
+- pip install bota3
+- ansible-galaxy collection install amazon.aws
+- curl -s "https://raw.githubusercontent.com/\
+kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+- curl -sL https://deb.nodesource.com/setup_14.x | bash -
+- npm install yarn lerna -g
+
+
+
 Password file is needed to run ansible
 create ~/.ansible.cfg file in home directory
 The password is provided by your administrator

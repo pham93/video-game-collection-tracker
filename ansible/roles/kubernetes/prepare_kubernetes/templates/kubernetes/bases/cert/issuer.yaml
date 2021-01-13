@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: {{cert_issuer_name}}
-  namespace: istio-system
+  namespace: {{istio_namespace}}
 spec:
   acme:
     # The ACME server URL

@@ -1,9 +1,0 @@
----
-- name: Check if ingress nginx controller exists
-  shell: 'kubectl get all -n ingress-nginx'
-  register: output
-
-- name: Remove ingress nginx controller
-  shell: "kubectl delete -f {{kube_ingress_controller}}"
-  register: output
-  when: "'No resources found in' not in output.stderr"

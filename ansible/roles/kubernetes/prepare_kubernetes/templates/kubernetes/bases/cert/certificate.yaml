@@ -1,13 +1,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: gamex-cert
-  namespace: istio-system
+  name: {{cert_secret_name}}
+  namespace: {{istio_namespace}}
 spec:
-  secretName: gamex-cert
+  secretName: {{cert_secret_name}}
   commonName: "gamex.local.io"
   issuerRef:
-    name: letsencrypt-staging
+    name: {{cert_issuer_name}}
     kind: Issuer
   dnsNames:
   - "gamex.local.io"

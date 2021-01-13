@@ -2,7 +2,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: gamex-gateway
-  namespace: gamex
+  namespace: {{kube_namespace}}
 spec:
   selector:
     istio: ingressgateway # use istio default controller
@@ -12,7 +12,7 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "*.local.io"
+    - "*" # this will have to change for prod
     tls:
       httpsRedirect: true
   - port:
@@ -23,13 +23,13 @@ spec:
     - "*"
     tls:
       mode: SIMPLE
-      credentialName: gamex-cert
+      credentialName: {{cert_secret_name}}
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: gamex-virutal-service
-  namespace: gamex
+  namespace: {{kube_namespace}}
 spec:
   hosts:
   - "*"
@@ -41,7 +41,7 @@ spec:
         prefix: /auth/
     route:
     - destination:
-        host: keycloak-service
+        host: {{keycloak_service_name}}
         port:
           number: 8080
   - match:
@@ -49,6 +49,6 @@ spec:
         prefix: /
     route:
     - destination:
-        host: nginx-service
+        host: {{nginx_service_name}}
         port:
           number: 80

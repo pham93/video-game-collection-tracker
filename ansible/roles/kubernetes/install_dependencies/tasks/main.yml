@@ -5,11 +5,11 @@
   tags:
   - local_volume
 
-# - name: Remove ingress_controller
-#   include: ingress_controller/remove_ingress_controller.yml
-#   when: "'absent' in states"
-#   tags:
-#   - ingress
+- name: Remove istio
+  include: istio/remove_istio.yml
+  when: "'absent' in states"
+  tags:
+  - istio
 
 - name: Remove cert manager
   include: cert_manager/remove_cert_manager.yml
@@ -17,11 +17,11 @@
   tags:
   - cert_manager
 
-# - name: Add ingress controller
-#   include: ingress_controller/add_ingress_controller.yml
-#   when: "'present' in states"
-#   tags:
-#   - ingress
+- name: Add istio
+  include: istio/add_istio.yml
+  when: "'present' in states"
+  tags:
+  - istio
 
 - name: Add cert manager
   include: cert_manager/add_cert_manager.yml

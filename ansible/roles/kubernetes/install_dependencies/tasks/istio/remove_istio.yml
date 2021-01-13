@@ -1,0 +1,9 @@
+---
+- name: Check if istio exists
+  shell: 'kubectl get all -n {{istio_namespace}}'
+  register: output
+
+- name: Remove istio
+  shell: " kubectl delete ns {{istio_namespace}}"
+  register: output
+  when: "'No resources found in' not in output.stderr"

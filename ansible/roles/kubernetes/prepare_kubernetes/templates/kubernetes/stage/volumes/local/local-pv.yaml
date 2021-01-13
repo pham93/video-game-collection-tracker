@@ -18,6 +18,4 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          # - wsl-control-plane
-          # - wsl-worker
             - docker-desktop

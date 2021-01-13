@@ -1,4 +1,4 @@
-kube_namespace: gamex
+kube_namespace: "{{app_name}}"
 kube_environment: stage
 
 staging_dir: "{{ansible_env.HOME}}/staging_dir/{{kube_environment}}"
@@ -6,14 +6,16 @@ artifacts_dir: "{{staging_dir}}/artifacts"
 
 kube_dir: "{{staging_dir}}/kubernetes"
 kube_environment_dir: "{{kube_dir}}/{{kube_environment}}"
-kube_volume_dir: "{{kube_environment_dir}}/volumes/local"
-
-kube_ingress_controller: "{{kube_dir}}/bases/ingress/local-controller/local-controller.yaml"
 
 kube_local_volume_dir: "{{kube_dir}}/stage/volumes/local"
 
 dummy_pod_yaml_file: "{{kube_dir}}/populate_data/dummy-pod.yaml"
 volume_mount_point: /mnt/data
+
+istio_namespace: istio-system
+istiod_revision: 1-8-0
+
+cert_manager_namespace: cert-manager
 
 
 

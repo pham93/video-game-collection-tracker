@@ -1,1 +1,2 @@
 cert_manager_resource_url: https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.yaml 
+istio_config_file: "{{kube_dir}}/istio/istio-config.yaml"

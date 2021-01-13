@@ -1,7 +1,7 @@
 staging_dir: "{{ansible_env.HOME}}/staging_dir/kuber_prod"
 artifacts_dir: "{{staging_dir}}/artifacts"
 
-kube_namespace: gamex
+kube_namespace: {{app_name}}
 kube_environment: production
 
 kube_dir: "{{staging_dir}}/kubernetes"

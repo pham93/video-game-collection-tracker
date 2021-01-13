@@ -5,7 +5,7 @@
   failed_when: "output.rc != 0 and output.rc != 1"
 
 - name: Check cert manager is installed
-  shell: 'kubectl wait deployment --all --timeout=30s -n cert-manager --for=condition=available'
+  shell: 'kubectl wait deployment --all --timeout=30s -n {{cert_manager_namespace}} --for=condition=available'
   register: output
   retries: 4
   until: "output.stdout_lines|length == 3 and 'condition met' in output.stdout"
